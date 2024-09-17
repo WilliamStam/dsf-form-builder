@@ -1,49 +1,49 @@
-.sidebar {
-    .item-panel-item {
-        border: 1px solid transparent;
-        border-bottom: 1px dotted var(--surface-d);
-        cursor: grab;
-        
-        
-        &:hover {
-            background: var(--surface-hover);
-            border: 1px solid var(--surface-d);
-        }
-        
-        .item-icon {
-            align-items: center;
-            background: var(--surface-e);
-            border: 1px solid var(--surface-d);
-            display: flex;
-            font-size: 1.5rem;
-            justify-content: center;
-            width: 3rem;
-            
-        }
-        
-        
-        .item-title {
-            font-weight: bold;
-            margin: 0;
-        }
-        
-        .item-text {
-            font-size: 0.8rem;
-        }
+
+.item-panel-item {
+    border: 1px solid transparent;
+    border-bottom: 1px dotted var(--surface-d);
+    cursor: grab;
+    
+    
+    &:hover {
+        background: var(--surface-hover);
+        border: 1px solid var(--surface-d);
     }
     
-    .p-tabview-nav, .p-tabview-nav-link {
-        background: none;
+    .item-icon {
+        align-items: center;
+        background: var(--surface-e);
+        border: 1px solid var(--surface-d);
+        display: flex;
+        font-size: 1.5rem;
+        justify-content: center;
+        width: 3rem;
+        
     }
     
-    .p-tabview-panels, .p-accordion-content {
-        padding:0;
-        background: none;
+    
+    .item-title {
+        font-weight: bold;
+        margin: 0;
     }
     
-    .p-accordion .p-accordion-content {
-        border:none;
+    .item-text {
+        font-size: 0.8rem;
     }
-    .p-accordion .p-accordion-header-link {
-    }
+}
+
+.p-tabview-nav, .p-tabview-nav-link {
+    background: none;
+}
+
+.p-tabview-panels, .p-accordion-content {
+    padding: 0;
+    background: none;
+}
+
+.p-accordion .p-accordion-content {
+    border: none;
+}
+
+.p-accordion .p-accordion-header-link {
 }

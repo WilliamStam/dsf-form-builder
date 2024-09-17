@@ -8,24 +8,28 @@
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr auto;
     height: calc(100vh - 3rem);
+    background: purple;
     
     .sidebar-area {
         grid-area: blocks;
         width: 20rem;
+        @import "sidebar";
     }
     .properties-area {
         grid-area: properties;
         width: 25rem;
+        @import "properties";
     }
     
     .canvas-area {
         grid-area: canvas;
+        @import "canvas";
     }
     
     & > footer {
         grid-area: output;
     }
-    @import "sidebar";
-    @import "properties";
-    @import "canvas";
+   
+    
+    
 }

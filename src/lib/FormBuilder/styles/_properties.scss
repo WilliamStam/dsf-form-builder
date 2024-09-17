@@ -1,6 +1,4 @@
-.properties-area {
-    border-left: 1px solid var(--surface-d);
-    
+
     .item-panel-item {
         border: 1px solid transparent;
         
@@ -13,9 +11,8 @@
             width: 3rem;
             
         }
+        
+        &.active {
+            border-left: 1px solid var(--primary-color);
+        }
     }
-    
-    &.active {
-        border-left: 1px solid var(--primary-color);
-    }
-}
