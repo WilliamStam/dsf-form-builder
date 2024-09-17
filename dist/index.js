@@ -18,9 +18,9 @@ const m = (r = {
   const { form: e, setForm: t } = m(r);
   return console.log(t), /* @__PURE__ */ n(i, { children: /* @__PURE__ */ o("div", { className: "form-builder", children: [
     /* @__PURE__ */ o("h1", { children: [
-      "~",
+      "- ",
       e.label,
-      "~"
+      " ====="
     ] }),
     /* @__PURE__ */ n("div", { children: JSON.stringify(e) })
   ] }) });
