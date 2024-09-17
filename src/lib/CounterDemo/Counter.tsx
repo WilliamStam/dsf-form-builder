@@ -1,10 +1,8 @@
-import type {FC} from 'react';
-import {useEffect} from 'react';
-import {throttle} from 'lodash';
+import type {FC} from "react";
 
-import classes from './Counter.module.css';
-import useLogic from './useLogic';
-import "./Counter.module.css"
+import classes from "./Counter.module.scss";
+import useLogic from "./useLogic";
+
 export type Props = {
     /** Set initial value */
     initialValue?: number;
@@ -12,14 +10,7 @@ export type Props = {
 
 export const Counter: FC<Props> = ({initialValue = 0}) => {
     const {count, incrementCount} = useLogic(initialValue);
-
-    useEffect(() => {
-        const runner = throttle(() => {
-            console.log('throttle');
-        }, 10);
-        runner();
-    }, []);
-
+    
     return (
         <div className={classes.counter}>
             <h2 className={classes.header}>Counter</h2>

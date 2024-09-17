@@ -18,21 +18,9 @@
     }
   },
   "keywords": [
-    "react",
-    "template",
-    "react-testing-library",
-    "testing-library",
-    "eslint",
-    "npm",
-    "rollup",
-    "stylelint",
-    "library",
-    "package",
-    "vite",
-    "css-modules",
-    "typescript"
+    "forms"
   ],
-  "description": "Missing React, typescript NPM library creation template",
+  "description": "Form Building",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -42,11 +30,7 @@
     "react": ">=18.3",
     "react-dom": ">=18.3"
   },
-  "dependencies": {
-    "lodash": ">=4.17"
-  },
   "devDependencies": {
-    "@types/lodash": "4.17.7",
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
     "@vitejs/plugin-react": "4.3.1",
@@ -54,6 +38,8 @@
     "alias-hq": "6.2.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "sass": "^1",
+    "sass-embedded": "^1.78.0",
     "ts-node": "10.9.2",
     "typescript": "5.5.4",
     "vite": "5.4.2",
