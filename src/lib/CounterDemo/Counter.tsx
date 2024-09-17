@@ -4,7 +4,7 @@ import {throttle} from 'lodash';
 
 import classes from './Counter.module.css';
 import useLogic from './useLogic';
-
+import "./Counter.module.css"
 export type Props = {
     /** Set initial value */
     initialValue?: number;
