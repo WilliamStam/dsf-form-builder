@@ -1,11 +1,9 @@
-import type {FC} from 'react';
-
-import {Builder} from '@/lib';
-import './index.css';
-import {FormType} from "@/lib/objects/forms.ts"
+import {Builder} from "@/lib";
+import "./index.css";
+import type {FC} from "react";
 
 const App: FC = () => {
-    const config: FormType = {
+    const config = {
         "id": 4,
         "label": "Daily checklist",
         "config": [
@@ -25,14 +23,17 @@ const App: FC = () => {
                 "name": "What date",
                 "value": "1"
             },
-           
+        
         ],
         "created_at": "2024-07-08T16:01:02"
-    }
+    };
     return (
+        <>
         <div>
-            <Builder config={config} />
+            <h1>Builder</h1>
+            <Builder config={config}/>
         </div>
+        </>
     );
 };
 
