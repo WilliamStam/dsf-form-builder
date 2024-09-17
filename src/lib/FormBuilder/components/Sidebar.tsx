@@ -1,5 +1,5 @@
 import type {FC} from "react";
-import "./styles/form.scss"
+
 import {FormType, formState} from "@/objects/forms.ts";
 
 export type Props = {
@@ -7,18 +7,14 @@ export type Props = {
     config?: FormType;
 };
 
-export const Builder: FC<Props> = ({config}) => {
+export const Sidebar: FC<Props> = ({config}) => {
     const {form, setForm} = formState(config);
     console.log(setForm)
     return (
         <>
-            <div className="form-builder">
-            
-            
             <h1>{form.label}</h1>
-        <div>
-            {JSON.stringify(form)}
-        </div>
+            <div>
+                {JSON.stringify(form)}
             </div>
         </>
     );

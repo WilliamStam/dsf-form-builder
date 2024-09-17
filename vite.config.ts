@@ -5,13 +5,20 @@ import react from '@vitejs/plugin-react';
 import hq from 'alias-hq';
 import external from '@yelo/rollup-node-external';
 import dts from 'vite-plugin-dts';
+import styles from "rollup-plugin-styles";
 
 // https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
         alias: hq.get('rollup'),
     },
-    plugins: [react(), dts({rollupTypes: true, exclude: []})],
+    plugins: [
+        react(),
+        dts({
+            rollupTypes: true,
+            exclude: []
+        }),
+    ],
     build: {
         sourcemap: true,
         lib: {
@@ -31,7 +38,9 @@ export default defineConfig({
                 globals: {
                     react: 'React',
                 },
+                assetFileNames: "[name]-[hash][extname]",
             },
+            plugins: [styles()],
         },
     },
     css: {
