@@ -11,6 +11,7 @@ export const Builder: FC<Props> = ({config}) => {
     console.log(setForm)
     return (
         <>
+            <h1>{form.label}</h1>
         <div>
             {JSON.stringify(form)}
         </div>

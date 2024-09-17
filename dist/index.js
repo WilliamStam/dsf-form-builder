@@ -1,22 +1,25 @@
-import { jsx as o, Fragment as l } from "react/jsx-runtime";
+import { jsxs as l, Fragment as s, jsx as n } from "react/jsx-runtime";
 import { useState as i } from "react";
-function s(r) {
+function c(r) {
   return JSON.parse(JSON.stringify(r));
 }
-const c = (r = {
+const m = (r = {
   id: null,
   label: null,
   created_at: null,
   config: []
 }) => {
-  const [t, e] = i(r);
+  const [e, t] = i(r);
   return {
-    form: t,
-    setForm: (n) => e(s(n))
+    form: e,
+    setForm: (o) => t(c(o))
   };
 }, u = ({ config: r }) => {
-  const { form: t, setForm: e } = c(r);
-  return console.log(e), /* @__PURE__ */ o(l, { children: /* @__PURE__ */ o("div", { children: JSON.stringify(t) }) });
+  const { form: e, setForm: t } = m(r);
+  return console.log(t), /* @__PURE__ */ l(s, { children: [
+    /* @__PURE__ */ n("h1", { children: e.label }),
+    /* @__PURE__ */ n("div", { children: JSON.stringify(e) })
+  ] });
 };
 export {
   u as Builder
