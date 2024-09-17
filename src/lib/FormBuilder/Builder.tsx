@@ -12,7 +12,7 @@ export const Builder: FC<Props> = ({config}) => {
     return (
         <>
             <div className="form-builder">
-                <h1>{form.label}</h1>
+                <h1>~{form.label}~</h1>
                 <div>
                     {JSON.stringify(form)}
                 </div>
