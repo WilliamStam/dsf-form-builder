@@ -1,3 +1,12 @@
+.canvas {
+    box-shadow: 0 0 0.5rem var(--surface-d) inset;
+    
+    border:1px solid var(--surface-e);
+    padding:1rem;
+    height:100%;
+    overflow: auto;
+}
+
 .sortable-item {
     position: relative;
     padding: 1rem 1rem 0 1rem;

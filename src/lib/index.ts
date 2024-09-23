@@ -1,1 +1,2 @@
-export {Builder} from './FormBuilder';
+export {FormBuilder} from './builder';
+export {ItemRender} from './item';

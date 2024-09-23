@@ -1,5 +1,4 @@
-import {Group} from "@/objects/groups.ts";
-import {IconProp} from "@fortawesome/fontawesome-svg-core";
+import {Group} from "./groups.ts";
 import React from "react";
 
 
@@ -7,7 +6,7 @@ export type ItemType = {
     id: string;
     type: string;
 }
-
+export type ItemOnChangeType = (item: ItemType) => void
 
 
 export interface FieldComponentProps {
@@ -41,7 +40,7 @@ export class ItemInit {
         public heading: string,
         public description: string,
         public hidden: boolean,
-        public icon: IconProp,
+        public icon: React.FunctionComponent,
         public default_config: ItemType,
         public group?: Group,
     ) {
@@ -83,6 +82,12 @@ export class ItemRegistry {
             item.group = group;
         }
         this.items.push(item);
+    }
+    
+    addRegistry(registry: ItemRegistry): void {
+        for (const item of registry) {
+            this.items.push(item);
+        }
     }
     
     getByItem(item: ItemType): Item | undefined {

@@ -3,33 +3,34 @@
     flex: 1 1 auto;
     display: grid;
     grid-template-areas:
-          "blocks canvas properties"
-          "output output output";
+          "sidebar canvas properties";
     grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr auto;
-    height: calc(100vh - 3rem);
-    background: purple;
+    height: 100%;
+    padding:1rem;
+    //background: purple;
     
     .sidebar-area {
-        grid-area: blocks;
+        grid-area: sidebar;
         width: 20rem;
+        //background: red;
+        overflow: auto;
         @import "sidebar";
     }
     .properties-area {
         grid-area: properties;
         width: 25rem;
+        overflow: auto;
+        //background: green;
         @import "properties";
     }
     
     .canvas-area {
         grid-area: canvas;
+        overflow: auto;
+        padding:0 1px;
+        margin:0 1rem;
+        //background: orange;
         @import "canvas";
     }
-    
-    & > footer {
-        grid-area: output;
-    }
-   
-    
     
 }

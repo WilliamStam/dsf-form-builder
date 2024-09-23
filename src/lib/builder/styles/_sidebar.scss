@@ -1,0 +1,97 @@
+.sidebar {
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    .p-tabview-panels {
+        flex-grow:1;
+        overflow:auto;
+        display:flex;
+        flex-direction: column;
+        .p-tabview-panel {
+            height:100%;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+    //
+            .p-accordion {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: auto;
+                border: none;
+                .p-accordion-tab {
+                    margin-top:0.5rem;
+                    margin-bottom:0;
+                    &.p-accordion-tab-active {
+                        flex-grow:1;
+                        overflow: auto;
+                        display: flex;
+                        flex-direction: column;
+                        .p-toggleable-content {
+                            flex-grow: 1;
+                            overflow: auto;
+                        }
+                    
+                    }
+                }
+            }
+    //
+        }
+    }
+}
+
+.item-panel-item {
+    border: 1px solid transparent;
+    border-bottom: 1px dotted var(--surface-d);
+    cursor: grab;
+    
+    
+    &:hover {
+        background: var(--surface-hover);
+        border: 1px solid var(--surface-d);
+    }
+    
+    .item-icon {
+        align-items: center;
+        background: var(--surface-e);
+        border: 1px solid var(--surface-d);
+        display: flex;
+        font-size: 1.5rem;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        padding:0.5rem;
+        svg {
+            height:100%;
+            width:100%;
+            fill: var(--surface-d);
+        }
+        
+    }
+    
+    
+    .item-title {
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    .item-text {
+        font-size: 0.8rem;
+    }
+}
+
+.p-tabview-nav, .p-tabview-nav-link {
+    background: none;
+}
+
+.p-tabview-panels, .p-accordion-content {
+    padding: 0;
+    background: none;
+}
+
+.p-accordion .p-accordion-content {
+    border: none;
+}
+
+.p-accordion .p-accordion-header-link {
+}

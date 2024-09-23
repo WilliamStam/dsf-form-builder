@@ -1,6 +1,15 @@
-import { FC } from 'react';
+import { default as default_2 } from 'react';
+import { JSX as JSX_2 } from 'react/jsx-runtime';
 
-export declare const Builder: FC<Props>;
+declare interface FieldComponentProps {
+    config: ItemType;
+    onChange: (value: ItemType) => void;
+}
+
+export declare const FormBuilder: ({ config, onChange }: {
+    config?: FormType;
+    onChange: (form: FormType) => void;
+}) => JSX_2.Element;
 
 declare type FormType = {
     id: number | null;
@@ -9,14 +18,14 @@ declare type FormType = {
     config: ItemType[];
 };
 
+export declare const ItemRender: ({ item, onChange }: {
+    item: ItemType;
+    onChange: (item: ItemType) => void;
+}) => default_2.FunctionComponentElement<FieldComponentProps> | default_2.FunctionComponentElement<{}>;
+
 declare type ItemType = {
     id: string;
     type: string;
-};
-
-declare type Props = {
-    /** Set initial value */
-    config?: FormType;
 };
 
 export { }

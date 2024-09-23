@@ -1,4 +1,4 @@
-import {FieldComponentProps, Item, ItemRenderer, ItemType} from "@/objects/items.ts";
+import {FieldComponentProps, Item, ItemRenderer, ItemType} from "@/lib/objects";
 import {nanoid} from "nanoid";
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {InputText} from "primereact/inputtext";
@@ -12,7 +12,7 @@ export type TextInputConfig = ItemType & {
 
 const itemConfig: TextInputConfig = {
     id: nanoid(),
-    type: "text",
+    type: "input-text",
     label: "",
     value: "",
     placeholder: "",
@@ -114,6 +114,7 @@ export default new Item({
     heading: "Text input",
     description: "a simple box to insert a value into",
     hidden: false,
-    icon: ["fas","font"],
+    icon: ()=> {
+        return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M254 52.8C249.3 40.3 237.3 32 224 32s-25.3 8.3-30 20.8L57.8 416 32 416c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-1.8 0 18-48 159.6 0 18 48-1.8 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-25.8 0L254 52.8zM279.8 304l-111.6 0L224 155.1 279.8 304z"/></svg>)},
     default_config: itemConfig
 });

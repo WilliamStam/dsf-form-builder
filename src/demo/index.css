@@ -1,0 +1,12 @@
+body {
+    margin:0;
+}
+#builder {
+    height: calc(100vh - 10rem);
+}
+#output {
+    height:10rem;
+    padding:0.5rem;
+    textarea {
+    }
+}
