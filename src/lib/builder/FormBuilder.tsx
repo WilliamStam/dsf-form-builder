@@ -21,7 +21,7 @@ import {
 import {arrayMove, rectSwappingStrategy, SortableContext, sortableKeyboardCoordinates,} from "@dnd-kit/sortable";
 import {nanoid} from "nanoid";
 import {useEffect, useState} from "react";
-import style from "./styles/builder.scss";
+import "./styles/builder.scss";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 // import "primereact/resources/themes/lara-dark-cyan/theme.css";
 import "primereact/resources/primereact.min.css"; //core css

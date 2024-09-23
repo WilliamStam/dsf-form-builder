@@ -3,7 +3,6 @@ import {resolve} from 'path';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import hq from 'alias-hq';
-import external from '@yelo/rollup-node-external';
 import dts from 'vite-plugin-dts';
 import styles from "rollup-plugin-styles";
 import {peerDependencies} from './package.json';
@@ -37,11 +36,12 @@ export default defineConfig({
                 // Provide global variables to use in the UMD build
                 // for externalized deps
                 globals: {
-                    react: 'React',
+                    'react': 'React',
+                    'react-dom': 'ReactDOM',
                 },
-                assetFileNames: "[name]-[hash][extname]",
+                assetFileNames: "[name][extname]",
             },
-            plugins: [styles()],
+            plugins: [styles({mode: "emit"})],
         },
     },
     css: {
