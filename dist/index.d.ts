@@ -11,7 +11,7 @@ export declare const FormBuilder: ({ config, onChange }: {
     onChange: (form: FormType) => void;
 }) => JSX_2.Element;
 
-declare type FormType = {
+export declare type FormType = {
     id: number | null;
     label: string | null;
     created_at: string | null;
@@ -23,7 +23,7 @@ export declare const ItemRender: ({ item, onChange }: {
     onChange: (item: ItemType) => void;
 }) => default_2.FunctionComponentElement<FieldComponentProps> | default_2.FunctionComponentElement<{}>;
 
-declare type ItemType = {
+export declare type ItemType = {
     id: string;
     type: string;
 };
