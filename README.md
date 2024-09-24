@@ -1,10 +1,11 @@
-# Usage
-
 # Install
 
 ```Bash
 npm install git+https://github.com/WilliamStam/dsf-form-builder
 ```
+
+
+# Usage
 
 Css for the demo. the builder needs a "height" block. it tries to frill its parent's size
 ```css

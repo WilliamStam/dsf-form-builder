@@ -23,9 +23,8 @@ import {arrayMove, rectSwappingStrategy, SortableContext, sortableKeyboardCoordi
 import {nanoid} from "nanoid";
 import {useEffect, useState} from "react";
 import "./styles/builder.scss";
-import "primereact/resources/themes/lara-light-cyan/theme.css";
 // import "primereact/resources/themes/lara-dark-cyan/theme.css";
-import "primereact/resources/primereact.min.css"; //core css
+import "primereact/resources/primereact.min.css"; //core css1
 import "primeicons/primeicons.css"; //icons
 import "primeflex/primeflex.css";
 // import style from "./style.css";

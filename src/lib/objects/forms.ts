@@ -21,7 +21,6 @@ export const formState = (initial_form: FormType = empty_form) => {
     return {
         form,
         setForm: (new_form: FormType) => {
-            console.log("formState", "setFormHandler", new_form ?? empty_form);
             _setFormHandler({...{...empty_form, ...new_form}});
         },
     };
