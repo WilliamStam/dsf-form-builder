@@ -6,8 +6,8 @@ declare interface FieldComponentProps {
     onChange: (value: ItemType) => void;
 }
 
-export declare const FormBuilder: ({ config, onChange }: {
-    config?: FormType;
+export declare const FormBuilder: ({ ...props }: {
+    form?: FormType;
     onChange: (form: FormType) => void;
 }) => JSX_2.Element;
 

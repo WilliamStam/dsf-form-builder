@@ -12,6 +12,7 @@ const BuilderDemo: FC = () => {
             {
                 "id": "a",
                 "type": "select-select",
+                "label":"Select input",
                 "options": [
                     {
                         "value": "1",
@@ -42,24 +43,29 @@ const BuilderDemo: FC = () => {
                         "label": "7"
                     }
                 ],
-                "name": "What date",
                 "value": "1"
             },
             
             {
                 "id": "b",
                 "type": "input-text",
-                "label": "Text"
+                "label": "Text Input"
             },
             {
                 "id": "c",
                 "type": "input-date",
-                "label": "Date"
+                "label": "Date Input"
             },
             {
                 "id": "d",
                 "type": "input-number",
-                "label": "Number"
+                "label": "Number Input"
+            },
+            {
+                "id": "e",
+                "type": "content-html",
+                "label": "Html Item",
+                "value": "hi <strong>there</strong> html"
             },
         
         ],
@@ -85,7 +91,7 @@ const BuilderDemo: FC = () => {
     return (
         <>
             <div id="builder">
-                <FormBuilder config={form} onChange={onChange}/>
+                <FormBuilder form={form} onChange={onChange}/>
             </div>
             
             <div id="output">

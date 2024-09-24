@@ -1,61 +1,11 @@
-import {FieldComponentProps, Item, ItemRenderer, ItemType} from "@/lib/objects";
+import {FieldComponentProps} from "@/lib/objects";
 import {clone_object} from "@/lib/utilities.ts";
-import {nanoid} from "nanoid";
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {Button} from "primereact/button";
-import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
 import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
+import {itemConfig, ItemConfigType, SelectOptionType} from "./config.ts";
 
-type SelectOptionType = {
-    value: string
-    label: string
-}
-
-export type SelectOptionInput = ItemType & {
-    label: string
-    value: string
-    options: SelectOptionType[]
-    placeholder: string
-}
-const itemConfig: SelectOptionInput = {
-    id: nanoid(),
-    type: "select-select",
-    label: "",
-    value: "",
-    options: [],
-    placeholder: ""
-};
-
-const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [item, setItem] = useState<SelectOptionInput>({...itemConfig, ...config});
-    useEffect(() => {
-        setItem({...itemConfig, ...config});
-    }, [config]);
-    const handleOnChange = (event: DropdownChangeEvent) => {
-        const updatedData: SelectOptionInput = {...{...itemConfig, ...config}, value: event.target.value};
-        onChange(updatedData);
-    };
-    
-    
-    const id = Math.random().toString(36).substring(2, 15);
-    return (
-        <>
-            <div className="flex flex-column gap-2">
-                <label htmlFor={id}>{item.label}</label>
-                <Dropdown
-                    id={id}
-                    value={item.value || ""}
-                    onChange={handleOnChange}
-                    options={item.options}
-                    showClear
-                    placeholder={item.placeholder || ""}
-                    className={"w-full"}
-                > </Dropdown>
-            </div>
-        </>
-    );
-};
 
 const SettingsEditOptionItem = ({option, onChange}: {
     option: SelectOptionType,
@@ -132,7 +82,6 @@ const SettingsAddOptionItem = ({onInsert}: {
     };
     
     
-    
     return (
         <>
             <div className="flex flex-row gap-2">
@@ -165,10 +114,10 @@ const SettingsAddOptionItem = ({onInsert}: {
 };
 
 const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [data, setData] = useState<SelectOptionInput>({...itemConfig, ...config});
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...config});
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: SelectOptionInput = {...data, [event.target.name]: event.target.value};
+        const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
         setData(updatedData);
         onChange(updatedData);
     };
@@ -247,28 +196,9 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) =>
         </>
     );
 };
+export default SettingsComponent;
 
-
-
-export default new Item({
-    type: itemConfig.type,
-    form: new ItemRenderer({
-        render: FormComponent,
-        validation: (item: SelectOptionInput) => {
-            console.log(item);
-            return {}
-        }
-    }),
-    settings: new ItemRenderer({
-        render: SettingsComponent,
-        validation: (item: SelectOptionInput) => {
-            console.log(item);
-            return {}
-        }
-    }),
-    heading: "Select box",
-    description: "select from a list of items in a drop down",
-    hidden: false,
-    icon: () => { return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"/></svg>)},
-    default_config: itemConfig
-});
+export const SettingsValidation = (item: ItemConfigType) => {
+    console.log("Validation", item);
+    return {}
+};

@@ -6,7 +6,8 @@ import hq from 'alias-hq';
 import dts from 'vite-plugin-dts';
 import styles from "rollup-plugin-styles";
 import {peerDependencies} from './package.json';
-
+import svgr from '@svgr/rollup'
+import removeConsole from "vite-plugin-remove-console";
 // https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
@@ -18,6 +19,8 @@ export default defineConfig({
             rollupTypes: true,
             exclude: []
         }),
+        svgr(),
+        removeConsole()
     ],
     build: {
         sourcemap: true,
@@ -41,7 +44,9 @@ export default defineConfig({
                 },
                 assetFileNames: "[name][extname]",
             },
-            plugins: [styles({mode: "emit"})],
+            plugins: [
+                styles({mode: "emit"}),
+            ],
         },
     },
     css: {

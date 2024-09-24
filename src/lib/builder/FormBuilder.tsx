@@ -35,25 +35,25 @@ function getData(prop: Active | Over | null) {
 
 let formloadcount = 0;
 
-export const FormBuilder = ({config, onChange}: {
-    config?: FormType,
+export const FormBuilder = ({...props}: {
+    form?: FormType,
     onChange: (form: FormType) => void,
 }) => {
     formloadcount = formloadcount + 1;
     console.log("******************", formloadcount, "******************");
     // this creates a new object on setForm so it should
-    const {form, setForm} = formState(config);
+    const {form, setForm} = formState(props.form);
     const [activeItem, setActiveItem] = useState<ItemType | undefined>(undefined);
     
     useEffect(() => {
-        if (config) {
-            setForm(config);
+        if (props.form) {
+            setForm(props.form);
         }
-    }, [config]);
+    }, [props.form]);
     
     useEffect(() => {
         if (form) {
-            onChange(form);
+            props.onChange(form);
         }
     }, [form]);
     
@@ -81,13 +81,13 @@ export const FormBuilder = ({config, onChange}: {
         const {item} = activeData;
         if (activeData.fromSidebar) {
             
-            const new_item = item.default_config;
+            const new_item = item.config;
+            console.info("activeData","item",item,"new_item", new_item)
             new_item.id = nanoid();
-            item.id = new_item.id;
+            // item.id = new_item.id;
             console.log("handleDragStart", "sidebar", item, new_item);
-            console.log(new_item);
-            setActiveSidebarField(item);
-            setActiveItem(activeData.item);
+            // setActiveSidebarField(item);
+            // setActiveItem(new_item);
         } else {
             setActiveField(activeData.item);
         }
@@ -105,8 +105,8 @@ export const FormBuilder = ({config, onChange}: {
             
             console.log("handleDragOver", "fromSidebar", activeData.item.id);
             if (form.config.findIndex((item) => item.id === activeData.item.id) == -1) {
-                console.log("handleDragOver", "new item", activeData.item.default_config, overData);
-                form.config.push(activeData.item.default_config);
+                console.log("handleDragOver", "new item", activeData.item.config, overData);
+                form.config.push(activeData.item.config);
                 const itemIndex = form.config.findIndex((item) => item.id === activeData.item.id);
                 const overIndex = form.config.findIndex((item) => item.id === overData.id);
                 form.config = arrayMove(form.config, itemIndex, overIndex);
@@ -166,16 +166,7 @@ export const FormBuilder = ({config, onChange}: {
         propertiesClassName = propertiesClassName + " active";
     }
     
-    // const handlerOnActiveItem = (item: ItemType | undefined) => {
-    //     // console.log("aaaa",item)
-    //     // if (item?.id == activeItem?.id){
-    //     //     setActiveItem(null)
-    //     // } else {
-    //     setActiveItem(item);
-    //     // }
-    //
-    // };
-    //
+   
     
     const form_args = {
         form: form,
@@ -184,7 +175,6 @@ export const FormBuilder = ({config, onChange}: {
         setActiveItem: setActiveItem
     };
     
-    console.log(setForm);
     if (form) {
         return (
             <>

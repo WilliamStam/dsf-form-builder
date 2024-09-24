@@ -23,7 +23,7 @@ const ItemSettings = ({item, onChange}: {
         () => <div>The component {item.type} was not found.</div>,
     );
 };
-export default function Properties({form, onFormChange, activeItem, setActiveItem}: {
+export default function Properties({...props}: {
     form: FormType,
     onFormChange: onFormChangeType,
     activeItem?: ItemType,
@@ -31,8 +31,8 @@ export default function Properties({form, onFormChange, activeItem, setActiveIte
     
 }) {
     console.log("reloading PropertiesComponent");
-    const [editing_form, setEditingForm] = useState(form);
-    const [editing_item, setEditingItem] = useState(activeItem);
+    const [editing_form, setEditingForm] = useState(props.form);
+    const [editing_item, setEditingItem] = useState(props.activeItem);
     
     const handleFormItemChange = (value: ItemType) => {
         console.log("handleFormItemChange", value);
@@ -46,28 +46,28 @@ export default function Properties({form, onFormChange, activeItem, setActiveIte
             }
             return it;
         });
-        onFormChange(new_form);
+        props.onFormChange(new_form);
     };
     const handleOnFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedData: FormType = {...editing_form, [event.target.name]: event.target.value};
         console.log(updatedData);
         setEditingForm(updatedData);
-        onFormChange(updatedData);
+        props.onFormChange(updatedData);
     };
     
     const handleCancel = () => {
-        setActiveItem(undefined);
+        props.setActiveItem(undefined);
     };
     
     console.log("activeItem", editing_item);
     
     useEffect(() => {
-        setEditingItem(activeItem);
-    }, [activeItem]);
+        setEditingItem(props.activeItem);
+    }, [props.activeItem]);
     
     useEffect(() => {
-        setEditingForm(form);
-    }, [form]);
+        setEditingForm(props.form);
+    }, [props.form]);
     
     
     // useEffect(() => {

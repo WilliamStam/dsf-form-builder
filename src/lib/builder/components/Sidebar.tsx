@@ -47,7 +47,7 @@ function DraggableSidebarField({item}: {
     );
 }
 
-export default function Sidebar({form, onFormChange, activeItem, setActiveItem}: {
+export default function Sidebar({...props}: {
     form: FormType,
     onFormChange: onFormChangeType,
     activeItem?: ItemType,
@@ -103,7 +103,7 @@ export default function Sidebar({form, onFormChange, activeItem, setActiveItem}:
             
                 </TabPanel>
                 <TabPanel header="Forms">
-                    forms {JSON.stringify(form)}
+                    forms {JSON.stringify(props.form)}
                 </TabPanel>
             </TabView>
         

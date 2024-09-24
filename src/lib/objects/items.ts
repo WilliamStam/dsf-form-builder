@@ -40,8 +40,8 @@ export class ItemInit {
         public heading: string,
         public description: string,
         public hidden: boolean,
-        public icon: React.FunctionComponent,
-        public default_config: ItemType,
+        public icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>,
+        public config: ItemType,
         public group?: Group,
     ) {
         if (!this.group) {
@@ -64,7 +64,7 @@ export class Item extends ItemInit {
             init.description,
             init.hidden,
             init.icon,
-            init.default_config,
+            init.config,
             init.group,
         );
     }
@@ -73,13 +73,17 @@ export class Item extends ItemInit {
 
 export class ItemRegistry {
     constructor(
+        public group: Group | null = null,
         public items: Item[] = [],
+        
     ) {
     }
     
     registerItem(item: Item, group?: Group): void {
         if (group) {
             item.group = group;
+        } else if (this.group){
+            item.group = this.group
         }
         this.items.push(item);
     }
