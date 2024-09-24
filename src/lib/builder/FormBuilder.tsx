@@ -3,6 +3,7 @@ import Properties from "@/lib/builder/components/Properties.tsx";
 import Sidebar, {SidebarField} from "@/lib/builder/components/Sidebar.tsx";
 import {ItemRender} from "@/lib/item";
 import {ItemType} from "@/lib/objects";
+import {ConfirmDialog} from "primereact/confirmdialog";
 import {formState, FormType} from "@/lib/objects/forms.ts";
 import {
     Active,
@@ -77,17 +78,14 @@ export const FormBuilder = ({...props}: {
         const {active} = e;
         const activeData = getData(active);
         
-        console.log("handleDragStart", activeData);
         const {item} = activeData;
         if (activeData.fromSidebar) {
             
             const new_item = item.config;
-            console.info("activeData","item",item,"new_item", new_item)
             new_item.id = nanoid();
-            // item.id = new_item.id;
-            console.log("handleDragStart", "sidebar", item, new_item);
-            // setActiveSidebarField(item);
-            // setActiveItem(new_item);
+            item.id = new_item.id
+            setActiveSidebarField(item);
+            setActiveItem(new_item);
         } else {
             setActiveField(activeData.item);
         }
@@ -212,6 +210,7 @@ export const FormBuilder = ({...props}: {
                         </DragOverlay>
                     </DndContext>
                 </div>
+                <ConfirmDialog/>
                
             </>
         );

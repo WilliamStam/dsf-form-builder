@@ -42,6 +42,7 @@ export function SortableItem({id, config, active, setActive, onItemChange, onIte
     
     
     const confirm = () => {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA")
         confirmDialog({
             message: "Are you sure you want to remove this item?",
             header: "Confirmation",

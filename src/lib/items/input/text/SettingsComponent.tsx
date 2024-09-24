@@ -22,31 +22,33 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) =>
     
     return (
         <>
-            <Accordion activeIndex={0}> <AccordionTab header="General" key="general">
-                <div className="form-item flex flex-column gap-4">
-                    
-                    <div className="flex flex-column gap-2">
-                        <label htmlFor={"label"}>Label</label>
-                        <InputText
-                            id={"label"}
-                            value={data.label || ""}
-                            name={"label"}
-                            onChange={handleOnChange}
-                            className="w-full"
-                        />
+            <Accordion activeIndex={0}>
+                <AccordionTab header="General" key="general">
+                    <div className="form-item flex flex-column gap-4">
+                        
+                        <div className="flex flex-column gap-2">
+                            <label htmlFor={"label"}>Label</label>
+                            <InputText
+                                id={"label"}
+                                value={data.label || ""}
+                                name={"label"}
+                                onChange={handleOnChange}
+                                className="w-full"
+                            />
+                        </div>
+                        <div className="flex flex-column gap-2">
+                            <label htmlFor={"placeholder"}>Placeholder</label>
+                            <InputText
+                                id={"placeholder"}
+                                value={data.placeholder || ""}
+                                name={"placeholder"}
+                                onChange={handleOnChange}
+                                className="w-full"
+                            />
+                        </div>
                     </div>
-                    <div className="flex flex-column gap-2">
-                        <label htmlFor={"placeholder"}>Placeholder</label>
-                        <InputText
-                            id={"placeholder"}
-                            value={data.placeholder || ""}
-                            name={"placeholder"}
-                            onChange={handleOnChange}
-                            className="w-full"
-                        />
-                    </div>
-                </div>
-            </AccordionTab> </Accordion>
+                </AccordionTab>
+            </Accordion>
         
         </>
     );

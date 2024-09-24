@@ -1,53 +1,102 @@
-[![CI](https://github.com/morewings/react-library-template/actions/workflows/merge-jobs.yml/badge.svg)](https://github.com/morewings/react-library-template/actions/workflows/merge-jobs.yml)
-[![Storybook deploy](https://github.com/morewings/react-library-template/actions/workflows/pages.yml/badge.svg)](https://github.com/morewings/react-library-template/actions/workflows/pages.yml)
-[![Use this template](https://img.shields.io/badge/use%20this-template-blue?logo=githu)](https://github.com/morewings/react-library-template/generate)
+# Usage
 
-# React Library Template
+# Install
 
-
-[![NPM library Create React App template logo](./design/logo.jpg)](#)
-
-With React Library Template Repository, you can focus on developing your React components and libraries without worrying about the configuration and setup.
-
-Read [full documentation](https://dev.to/morewings/fastest-way-to-create-a-react-library-3mi7).
-
-Visit [Demo Storybook](https://morewings.github.io/react-library-template/).
-
-## Features
-
-- Supports **Typescript** and **Javascript**.
-- Bundles `commonjs` and `es` module formats.
-- [pnpm](https://pnpm.io/) for blazing fast package management.
-- [Vite](https://vitejs.dev/) for speedy bundling
-- [Husky](https://github.com/typicode/husky) for git hooks.
-- [Eslint](https://eslint.org/) and [stylelint](https://stylelint.io/).
-- [Rollup](https://rollupjs.org/guide/en/) for bundling.
-- [Jest](https://jestjs.io/) and [react-testing-library](https://testing-library.com/docs/react-testing-library/intro) for testing.
-- [Storybook](https://storybook.js.org/) for documentation and demo.
-- Optional [Tailwind CSS](https://tailwindcss.com/) support.
-
-## Quickstart
-
-### Prerequisites
-
-1. Install **Node** >= 20.x.
-2. Install **pnpm**. E.g. `corepack prepare pnpm@latest --activate`.
-
-
-### Installation
-
-Manually clone repo or use `degit`.
-
-```shell script
-# With CSS Modules config
-npx degit github:morewings/react-library-template my-library
-# With Tailwind CSS config
-npx degit github:morewings/react-library-template#tailwind my-library
-cd ./my-library
-pnpm i
+```Bash
+npm install git+https://github.com/WilliamStam/dsf-form-builder
 ```
 
+Css for the demo. the builder needs a "height" block. it tries to frill its parent's size
+```css
+body {
+    margin: 0;
+}
+#builder {
+    height: calc(100vh - 10rem);
+}
+#output {
+    height: 10rem;
+    padding: 0.5rem;
+}
+```
 
-## Enable Tailwind CSS
+component
 
-You can find all changes at this [PR](https://github.com/morewings/react-library-template/pull/161) and [tailwind](https://github.com/morewings/react-library-template/tree/tailwind) branch.
+```jsx
+import React, {useState} from "react";
+import {FormBuilder} from "dsf-form-builder";
+import "dsf-form-builder/dist/style.css"
+import "./style.scss"
+export default function App() {
+    const [form, setForm] = useState({
+        "id": 4,
+        "label": "Demo form",
+        "config": [
+            {
+                "id": "a",
+                "type": "select-select",
+                "options": [
+                    {
+                        "value": "1",
+                        "label": "1"
+                    },
+                    {
+                        "value": "2",
+                        "label": "2"
+                    }
+                ],
+                "name": "What date",
+                "value": "1"
+            },
+            
+            {
+                "id": "b",
+                "type": "input-text",
+                "label": "Text"
+            },
+            {
+                "id": "c",
+                "type": "input-date",
+                "label": "Date"
+            },
+            {
+                "id": "d",
+                "type": "input-number",
+                "label": "Number"
+            },
+            {
+                "id": "e",
+                "type": "content-html",
+                "label": "HTML",
+                "value": "This <strong>IS</strong> sparta!"
+            },
+        
+        ],
+        "created_at": "2024-07-08T16:01:02"
+    });
+    const [formJSON, setFormJSON] = useState(JSON.stringify(form));
+    const handleOnChange = (event) => {
+        const v = event.target.value;
+        setFormJSON(v ?? "{}");
+        setForm(v ? JSON.parse(v) : {});
+    };
+    const onChange = (form) => {
+        setFormJSON(JSON.stringify(form));
+    };
+        
+    return (
+        <>
+            <div id="builder">
+                <FormBuilder form={form} onChange={onChange}/>
+            </div>
+            <div id="output">
+                <textarea
+                    style={{height: "100%", width: "100%"}}
+                    value={formJSON}
+                    onChange={handleOnChange}
+                ></textarea>
+            </div>
+        </>
+    )
+}
+```

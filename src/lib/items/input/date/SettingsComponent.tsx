@@ -1,15 +1,14 @@
-// @ts-nocheck
-import {ItemConfigType} from "@/lib/items/content/html/config.ts";
 import {FieldComponentProps} from "@/lib/objects";
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
+import {itemConfig, ItemConfigType} from "./config.ts";
 
 const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [data, setData] = useState<DateInputConfig>({...itemConfig, ...config});
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...config});
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: DateInputConfig = {...data, [event.target.name]: event.target.value};
+        const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
         setData(updatedData);
         onChange(updatedData);
     };
