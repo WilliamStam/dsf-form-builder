@@ -8,6 +8,7 @@ import styles from "rollup-plugin-styles";
 import {peerDependencies} from './package.json';
 import svgr from '@svgr/rollup'
 import removeConsole from "vite-plugin-remove-console";
+import {viteStaticCopy} from 'vite-plugin-static-copy'
 // https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
@@ -20,7 +21,15 @@ export default defineConfig({
             exclude: []
         }),
         svgr(),
-        removeConsole()
+        removeConsole(),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: 'primereact/resources/themes',
+                    dest: 'themes'
+                }
+            ]
+        })
     ],
     build: {
         sourcemap: true,
