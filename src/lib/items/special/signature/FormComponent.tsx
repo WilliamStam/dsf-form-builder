@@ -26,16 +26,23 @@ const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
         if (!signaturePad) {
             return;
         }
-        
+        const new_item = clone_object(item)
         if (signaturePad.isEmpty()) {
-            alert('Please provide a signature first.');
+            new_item.value = []
         } else {
-            const new_item = clone_object(item)
-            new_item.value = signaturePad.toDataURL()
-            setItem(new_item);
-            onChange(new_item);
+            new_item.value = signaturePad.toData()
+            
         }
+        setItem(new_item);
+        onChange(new_item);
     }
+    useEffect(() => {
+        if (item.value && signaturePadRef.current) {
+            console.log("DRAW THE SHIT")
+            signaturePadRef.current.fromData(item.value)
+        }
+    }, [item]);
+   
     
     return (
         <>

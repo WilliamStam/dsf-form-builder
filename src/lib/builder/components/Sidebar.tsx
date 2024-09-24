@@ -105,6 +105,9 @@ export default function Sidebar({...props}: {
                 <TabPanel header="Forms">
                     forms {JSON.stringify(props.form)}
                 </TabPanel>
+                <TabPanel header="Variables">
+                    list of variables this form can replace
+                </TabPanel>
             </TabView>
         
         
