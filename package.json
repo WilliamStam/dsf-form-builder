@@ -58,5 +58,8 @@
     "vite-plugin-dts": "^4.1",
     "vite-plugin-remove-console": "^2.2",
     "vite-plugin-static-copy": "^1.0.6"
+  },
+  "dependencies": {
+    "react-signature-pad-wrapper": "^4.0.4"
   }
 }
