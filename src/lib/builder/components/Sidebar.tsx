@@ -1,5 +1,5 @@
 import items from "@/lib/items";
-import {FormType, Item, ItemType, onFormChangeType} from "@/lib/objects";
+import {Config, FormType, Item, ItemType, onFormChangeType} from "@/lib/objects";
 import {useDraggable} from "@dnd-kit/core";
 import {nanoid} from "nanoid";
 import {Accordion, AccordionTab} from "primereact/accordion";
@@ -52,6 +52,7 @@ export default function Sidebar({...props}: {
     onFormChange: onFormChangeType,
     activeItem?: ItemType,
     setActiveItem: (item: ItemType | undefined) => void,
+    config: Config,
 }) {
     const [panelIndex, setPanelIndex] = useState<number>(0);
     

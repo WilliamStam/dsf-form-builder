@@ -1,16 +1,19 @@
 import items from "@/lib/items";
-import {ItemType} from "@/lib/objects";
+import {Config, ItemType} from "@/lib/objects";
 import React from "react";
 
-export const ItemRender = ({item, onChange}: {
+export const Item = ({item, onChange, config}: {
     item: ItemType,
-    onChange: (item: ItemType) => void
+    onChange: (item: ItemType) => void,
+    config: Config
 }) => {
+    console.log("MEEEEEEEEEEEEEEEEEE",config)
     const item_object = items.getByItem(item);
     if (item && item_object) {
         return React.createElement(item_object.form.render, {
-            config: item,
-            onChange: onChange
+            item: item,
+            onChange: onChange,
+            config:config
         });
     }
     // component doesn't exist yet

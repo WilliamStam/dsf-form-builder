@@ -18,5 +18,5 @@ export default new Item({
     description: "Signature capture block",
     hidden: false,
     icon: ItemIcon,
-    config: itemConfig
+    data: itemConfig
 });

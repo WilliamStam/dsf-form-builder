@@ -4,11 +4,11 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 import SignaturePad from 'react-signature-pad-wrapper';
 
-const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [item, setItem] = useState<ItemConfigType>({...itemConfig, ...config});
+const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
-        setItem({...itemConfig, ...config});
-    }, [config]);
+        setData({...itemConfig, ...item});
+    }, [item]);
     
     const id = Math.random().toString(36).substring(2, 15);
 
@@ -19,6 +19,10 @@ const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
         if(signaturePad) {
             signaturePad.instance.clear();
         }
+        const new_item = clone_object(data)
+        new_item.value = []
+        setData(new_item);
+        onChange(new_item);
     }
     const handleSave = () => {
         const signaturePad = signaturePadRef.current;
@@ -26,29 +30,35 @@ const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
         if (!signaturePad) {
             return;
         }
-        const new_item = clone_object(item)
+        const new_item = clone_object(data)
         if (signaturePad.isEmpty()) {
             new_item.value = []
         } else {
             new_item.value = signaturePad.toData()
             
         }
-        setItem(new_item);
+        setData(new_item);
         onChange(new_item);
     }
     useEffect(() => {
-        if (item.value && signaturePadRef.current) {
-            console.log("DRAW THE SHIT")
-            signaturePadRef.current.fromData(item.value)
+        if (data.value && signaturePadRef.current) {
+            signaturePadRef.current.fromData(data.value)
         }
-    }, [item]);
+    }, [data]);
    
+    const style = {
+        height: "10rem", width: "100%", border: "1px solid #cccccc", boxShadow: "0 0 0.32rem #ccc inset"
+    }
     
     return (
         <>
             <div className="flex flex-column gap-2">
-                <label htmlFor={id}>{item.label}</label>
-                <SignaturePad ref={signaturePadRef} options={{minWidth: 5, maxWidth: 10, penColor: 'rgb(0, 0, 0)'}} redrawOnResize/>
+                <label htmlFor={id}>{data.label}</label>
+                <div>
+                    <SignaturePad ref={signaturePadRef}  options={{ penColor: 'rgb(0, 0, 0)'}} redrawOnResize={true}
+                        canvasProps={{style: style}}  />
+                </div>
+                
                 <button onClick={handleClear}>clear</button>
                 <button onClick={handleSave}>save</button>
             </div>

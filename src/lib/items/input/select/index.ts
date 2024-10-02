@@ -18,5 +18,5 @@ export default new Item({
     description: "select from a list of items in a drop down",
     hidden: false,
     icon: ItemIcon,
-    config: itemConfig
+    data: itemConfig
 });

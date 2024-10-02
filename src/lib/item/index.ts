@@ -1,1 +1,2 @@
-export {ItemRender} from './ItemRender.tsx';
+export {Item} from './Item.tsx';
+export {Settings} from './Settings.tsx';

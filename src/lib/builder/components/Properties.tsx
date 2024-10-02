@@ -1,5 +1,6 @@
 import items from "@/lib/items";
-import {onFormChangeType} from "@/lib/objects";
+import {Settings} from "@/lib/item";
+import {Config, onFormChangeType} from "@/lib/objects";
 import {FormType, ItemType, } from "@/lib/objects";
 import {clone_object} from "@/lib/utilities.ts";
 import {Accordion, AccordionTab} from "primereact/accordion";
@@ -7,40 +8,25 @@ import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
 
-const ItemSettings = ({item, onChange}: {
-    item: ItemType,
-    onChange: (item: ItemType) => void
-}) => {
-    const item_object = items.getByItem(item)
-    if (item_object) {
-        return React.createElement(item_object.settings.render, {
-            config: item,
-            onChange: onChange
-        });
-    }
-    // component doesn't exist yet
-    return React.createElement(
-        () => <div>The component {item.type} was not found.</div>,
-    );
-};
 export default function Properties({...props}: {
     form: FormType,
     onFormChange: onFormChangeType,
     activeItem?: ItemType,
     setActiveItem: (item: ItemType | undefined) => void,
+    config: Config
     
 }) {
-    console.log("reloading PropertiesComponent");
+    console.log("Properties");
     const [editing_form, setEditingForm] = useState(props.form);
     const [editing_item, setEditingItem] = useState(props.activeItem);
     
     const handleFormItemChange = (value: ItemType) => {
-        console.log("handleFormItemChange", value);
+        console.log("Properties","handleFormItemChange", value);
         //
         setEditingItem(value);
         // //
         const new_form = clone_object(editing_form);
-        new_form.config = new_form.config.map((it) => {
+        new_form.items = new_form.items.map((it) => {
             if (it.id == value.id) {
                 return value;
             }
@@ -50,7 +36,6 @@ export default function Properties({...props}: {
     };
     const handleOnFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedData: FormType = {...editing_form, [event.target.name]: event.target.value};
-        console.log(updatedData);
         setEditingForm(updatedData);
         props.onFormChange(updatedData);
     };
@@ -59,13 +44,15 @@ export default function Properties({...props}: {
         props.setActiveItem(undefined);
     };
     
-    console.log("activeItem", editing_item);
+    console.log("Properties","activeItem", editing_item);
     
     useEffect(() => {
+        console.log("useEffect","setEditingItem", props.activeItem)
         setEditingItem(props.activeItem);
     }, [props.activeItem]);
     
     useEffect(() => {
+        console.log("useEffect", "setEditingForm", props.form)
         setEditingForm(props.form);
     }, [props.form]);
     
@@ -107,7 +94,7 @@ export default function Properties({...props}: {
                          <Button onClick={handleCancel} size="small" outlined={true} icon="pi pi-times"/>
                     </div>
                     
-                    <ItemSettings item={editing_item} onChange={handleFormItemChange}></ItemSettings>
+                    <Settings item={editing_item} onChange={handleFormItemChange} config={props.config}></Settings>
                     
                     {/* <Button onClick={handleCancel} size="small" className={"w-full"}>Done</Button> */}
                     </div>

@@ -5,20 +5,23 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
 
-const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...config});
+const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
+    console.log("SettingsComponent", item);
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
         setData(updatedData);
         onChange(updatedData);
+        console.log("SettingsComponent","handleOnChange", updatedData);
     };
     
     
     useEffect(() => {
-        setData({...itemConfig, ...config});
-    }, [config]);
-    
+        console.log("SettingsComponent","useEffect", item);
+        setData({...itemConfig, ...item});
+    }, [item]);
+    console.log("SettingsComponent", data);
     
     return (
         <>

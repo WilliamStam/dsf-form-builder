@@ -2,19 +2,21 @@ import {FieldComponentProps} from "@/lib/objects";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
-const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [item, setItem] = useState<ItemConfigType>({...itemConfig, ...config});
+const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
-        setItem({...itemConfig, ...config});
-    }, [config]);
+        setData({...itemConfig, ...item});
+    }, [item]);
     
     const id = Math.random().toString(36).substring(2, 15);
+    
+    
     
     return (
         <>
             <div className="flex flex-column gap-2">
-                <label htmlFor={id}>{item.label}</label>
-                {<div dangerouslySetInnerHTML={{__html: item.value}}/>}
+                <label htmlFor={id}>{data.label}</label>
+                {<div dangerouslySetInnerHTML={{__html: data.value}}/>}
                 
             </div>
         </>

@@ -4,8 +4,8 @@ import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
-const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...config});
+const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
@@ -15,8 +15,8 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({config, onChange}) =>
     
     
     useEffect(() => {
-        setData({...itemConfig, ...config});
-    }, [config]);
+        setData({...itemConfig, ...item});
+    }, [item]);
     
     
     return (

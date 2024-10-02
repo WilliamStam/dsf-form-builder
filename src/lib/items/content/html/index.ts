@@ -18,5 +18,5 @@ export default new Item({
     description: "WYSIWYG editor for adding in content to the form",
     hidden: false,
     icon: ItemIcon,
-    config: itemConfig
+    data: itemConfig
 });

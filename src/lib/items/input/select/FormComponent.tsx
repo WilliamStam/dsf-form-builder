@@ -1,31 +1,57 @@
-import {FieldComponentProps} from "@/lib/objects";
+import {ConfigExternalSelectData, FieldComponentProps} from "@/lib/objects";
 import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
 import React, {useEffect, useState} from "react";
-import {itemConfig, ItemConfigType} from "./config.ts";
+import {itemConfig, ItemConfigType, SelectOptionType} from "./config.ts";
 
-const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [item, setItem] = useState<ItemConfigType>({...itemConfig, ...config});
+const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
+    const [options, setOptions] = useState<SelectOptionType[]>(data.options)
+    
     useEffect(() => {
-        setItem({...itemConfig, ...config});
-    }, [config]);
+        setData({...itemConfig, ...item});
+    }, [item]);
+    
+    useEffect(() => {
+        setOptions(data.options);
+        if (data.source != "local") {
+            console.log("CONFIG", config, data.source)
+            const external: ConfigExternalSelectData | undefined = config.external_select_options.find((item) => item.key == data.source)
+            if (external) {
+                if (external.options) {
+                    setOptions(external.options)
+                }
+                if (external.options_func) {
+                    external.options_func().then((y: SelectOptionType[]) => {
+                        console.log("yyyyyyyyyyyy", y)
+                        setOptions(y)
+                    })
+                    
+                    // options = await external.options_func() ?? []
+                }
+            }
+        }
+        
+    }, [data.source, data.options]);
+    
     const handleOnChange = (event: DropdownChangeEvent) => {
-        const updatedData: ItemConfigType = {...{...itemConfig, ...config}, value: event.target.value};
+        const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
         onChange(updatedData);
     };
+    
     
     
     const id = Math.random().toString(36).substring(2, 15);
     return (
         <>
             <div className="flex flex-column gap-2">
-                <label htmlFor={id}>{item.label}</label>
+                <label htmlFor={id}>{data.label}</label>
                 <Dropdown
                     id={id}
-                    value={item.value || ""}
+                    value={data.value || ""}
                     onChange={handleOnChange}
-                    options={item.options}
+                    options={options}
                     showClear
-                    placeholder={item.placeholder || ""}
+                    placeholder={data.placeholder || ""}
                     className={"w-full"}
                 > </Dropdown>
             </div>

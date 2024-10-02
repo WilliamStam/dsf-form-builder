@@ -6,8 +6,9 @@ import SpecialItems from "./special"
 // import SelectRegistry from "./select"
 // import ContentRegistry from "./content"
 const items = new ItemRegistry();
-items.addRegistry(ContentItems)
 items.addRegistry(InputItems)
+items.addRegistry(ContentItems)
+
 items.addRegistry(SpecialItems)
 
 

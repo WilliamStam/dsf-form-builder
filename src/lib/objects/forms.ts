@@ -5,7 +5,7 @@ export type FormType = {
     id: number | null,
     label: string | null,
     created_at: string | null,
-    config: ItemType[]
+    items: ItemType[]
 }
 
 export type onFormChangeType = (form: FormType) => void;
@@ -13,7 +13,7 @@ const empty_form = {
     id: null,
     label: null,
     created_at: null,
-    config: []
+    items: []
 };
 
 export const formState = (initial_form: FormType = empty_form) => {

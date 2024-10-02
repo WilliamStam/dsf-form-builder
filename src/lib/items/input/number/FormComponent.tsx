@@ -4,14 +4,14 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
 
-const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [item, setItem] = useState<ItemConfigType>({...itemConfig, ...config});
+const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
-        setItem({...itemConfig, ...config});
-    }, [config]);
+        setData({...itemConfig, ...item});
+    }, [item]);
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: ItemConfigType = {...{...itemConfig, ...config}, value: event.target.value};
+        const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
         onChange(updatedData);
     };
     
@@ -20,12 +20,12 @@ const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
     return (
         <>
             <div className="flex flex-column gap-2">
-                <label htmlFor={id}>{item.label}</label>
+                <label htmlFor={id}>{data.label}</label>
                 <InputText
                     type={"number"}
-                    value={item.value}
+                    value={data.value}
                     onChange={handleOnChange}
-                    placeholder={item.placeholder || ""}
+                    placeholder={data.placeholder || ""}
                     className="w-full"
                     id={id}
                 ></InputText>

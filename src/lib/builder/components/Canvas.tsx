@@ -1,5 +1,5 @@
-import {FormType, ItemType, onFormChangeType} from "@/lib/objects";
-import {ItemRender} from "@/lib/item";
+import {Config, FormType, ItemType, onFormChangeType} from "@/lib/objects";
+import {Item} from "@/lib/item";
 import {clone_object} from "@/lib/utilities.ts";
 import {useDroppable} from "@dnd-kit/core";
 import {useSortable} from "@dnd-kit/sortable";
@@ -11,13 +11,14 @@ import {confirmDialog} from "primereact/confirmdialog";
 import {useEffect, useState} from "react";
 
 
-export function SortableItem({id, config, active, setActive, onItemChange, onItemRemove}: {
+export function SortableItem({id, item, active, setActive, onItemChange, onItemRemove, config}: {
     id: string,
-    config: ItemType,
+    item: ItemType,
     active?: ItemType,
     setActive: (item: ItemType | undefined) => void,
     onItemChange: (item: ItemType) => void
     onItemRemove: (id: string) => void
+    config: Config
 }) {
     
     const {attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition} =
@@ -25,7 +26,7 @@ export function SortableItem({id, config, active, setActive, onItemChange, onIte
             id,
             data: {
                 id,
-                item: config,
+                item: item,
             },
             
         });
@@ -36,13 +37,12 @@ export function SortableItem({id, config, active, setActive, onItemChange, onIte
     };
     
     let className = "sortable-item";
-    if (config.id == active?.id) {
+    if (item.id == active?.id) {
         className = className + " active";
     }
     
     
     const confirm = () => {
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA")
         confirmDialog({
             message: "Are you sure you want to remove this item?",
             header: "Confirmation",
@@ -51,8 +51,8 @@ export function SortableItem({id, config, active, setActive, onItemChange, onIte
             // reject: () => rejectFunc()
         });
     };
-    let editBtn = <Button size="small" outlined label="Edit" icon="pi pi-pencil" onClick={() => setActive(config)}/>;
-    if (active && active.id == config.id) {
+    let editBtn = <Button size="small" outlined label="Edit" icon="pi pi-pencil" onClick={() => setActive(item)}/>;
+    if (active && active.id == item.id) {
         editBtn = <Button size="small" outlined label="Done" icon="pi pi-pencil" onClick={() => setActive(undefined)}/>;
     }
     
@@ -60,10 +60,10 @@ export function SortableItem({id, config, active, setActive, onItemChange, onIte
         <>
             <div ref={setNodeRef} style={style} {...attributes} className={className}>
                 
-                <ItemRender item={config} onChange={onItemChange}/>
+                <Item item={item} onChange={onItemChange} config={config}/>
                 
                 <div className="flex flex-row align-items-center item-footer">
-                    <div className="flex-grow-1 item-type"> {config.type}</div>
+                    <div className="flex-grow-1 item-type"> {item.type}</div>
                     
                     <ButtonGroup> <Button {...listeners} // @ts-ignore
                         ref={setActivatorNodeRef}
@@ -85,38 +85,38 @@ export function SortableItem({id, config, active, setActive, onItemChange, onIte
     );
 }
 
-export default function Canvas({form, onFormChange, activeItem, setActiveItem}: {
+export default function Canvas({form, onFormChange, activeItem, setActiveItem, config}: {
     form: FormType,
     onFormChange: onFormChangeType,
     activeItem?: ItemType,
     setActiveItem: (item: ItemType | undefined) => void,
-    
+    config: Config
 }) {
-    console.log("reloading CanvasComponent");
-    const [items, setItems] = useState<ItemType[]>(form?.config ?? []);
+    console.log("Canvas", form);
+    const [items, setItems] = useState<ItemType[]>(form?.items ?? []);
     
     useEffect(() => {
-        if (form && form.config && form.config != items) {
-            console.log("resetting items", form, form.config, items);
-            setItems(form.config ?? []);
+        if (form && form.items && form.items != items) {
+            console.log("useEffect","setItems", "form", form, form.items, items);
+            setItems(form.items ?? []);
         }
     }, [form]);
     
     
     const handleItemRemove = (item_id: string) => {
-        
+        console.log("handleItemRemove", item_id);
         const new_form = clone_object(form);
-        new_form.config = new_form.config.filter(it =>
+        new_form.items = new_form.items.filter(it =>
             it.id != item_id
         );
         onFormChange(new_form);
         if (activeItem && activeItem.id == item_id) {
             setActiveItem(undefined);
         }
-        
     };
     
     const handleItemChange = (value: ItemType) => {
+        console.log("handleItemChange", value);
         const new_items: ItemType[] = items.map((item: ItemType) => {
             if (item.id == value.id) {
                 return value;
@@ -126,7 +126,7 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem}: 
         setItems(new_items);
         
         const new_form = clone_object<FormType>(form);
-        new_form.config = new_items;
+        new_form.items = new_items;
         onFormChange(new_form);
     };
     
@@ -144,19 +144,22 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem}: 
         transition,
     };
     
-    return (
+    return (<>
+            {/* <div>config: {JSON.stringify(config.external_select_options)}</div> */}
         <div ref={setNodeRef} className="canvas" style={style} {...listeners}>
             {items?.map((item) => (
                 <SortableItem
                     key={item.id}
                     id={item.id}
-                    config={item}
+                    item={item}
                     active={activeItem}
                     setActive={setActiveItem}
                     onItemChange={handleItemChange}
                     onItemRemove={handleItemRemove}
+                    config={config}
                 />
             ))}
         </div>
+        </>
     );
 }

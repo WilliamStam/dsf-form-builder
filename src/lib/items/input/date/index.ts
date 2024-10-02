@@ -18,5 +18,5 @@ export default new Item({
     description: "a simple box to select a date",
     hidden: false,
     icon: ItemIcon,
-    config: itemConfig
+    data: itemConfig
 });

@@ -1,80 +1,29 @@
+// @ts-nocheck
 import {FormBuilder} from "@/lib";
 import "./index.css";
 import {FormType} from "@/lib/objects";
+import {Config} from "@/lib/objects";
 import {FC, useState} from "react";
 
 
 const BuilderDemo: FC = () => {
     const [form, setForm] = useState({
-        "id": 4, "label": "Demo form", "created_at": "2024-07-08T16:01:02", "config": [
-            {"id": "e", "type": "content-html", "label": "Html Item", "value": "hi <strong>there</strong> html"}, {
-                "id": "5u4ldd1pbqv3RRPfNyfN9",
-                "type": "special-signature",
-                "label": "aa",
-                "value": [
-                    {
-                        "penColor": "rgb(0, 0, 0)",
-                        "dotSize": 0,
-                        "minWidth": 5,
-                        "maxWidth": 10,
-                        "velocityFilterWeight": 0.7,
-                        "compositeOperation": "source-over",
-                        "points": [
-                            {"time": 1727197915337, "x": 58, "y": 54, "pressure": 0.5},
-                            {"time": 1727197915445, "x": 52, "y": 61, "pressure": 0.5},
-                            {"time": 1727197915481, "x": 45, "y": 69, "pressure": 0.5},
-                            {"time": 1727197915498, "x": 42, "y": 74, "pressure": 0.5},
-                            {"time": 1727197915516, "x": 39, "y": 79, "pressure": 0.5},
-                            {"time": 1727197915532, "x": 36, "y": 84, "pressure": 0.5},
-                            {"time": 1727197915550, "x": 35, "y": 89, "pressure": 0.5},
-                            {"time": 1727197915588, "x": 33, "y": 96, "pressure": 0.5},
-                            {"time": 1727197915622, "x": 35, "y": 102, "pressure": 0.5},
-                            {"time": 1727197915658, "x": 43, "y": 109, "pressure": 0.5},
-                            {"time": 1727197915674, "x": 50, "y": 113, "pressure": 0.5},
-                            {"time": 1727197915690, "x": 60, "y": 116, "pressure": 0.5},
-                            {"time": 1727197915706, "x": 72, "y": 118, "pressure": 0.5},
-                            {"time": 1727197915722, "x": 85, "y": 118, "pressure": 0.5},
-                            {"time": 1727197915738, "x": 96, "y": 116, "pressure": 0.5},
-                            {"time": 1727197915755, "x": 107, "y": 114, "pressure": 0.5},
-                            {"time": 1727197915773, "x": 114, "y": 112, "pressure": 0.5},
-                            {"time": 1727197915808, "x": 117, "y": 106, "pressure": 0.5},
-                            {"time": 1727197915841, "x": 117, "y": 97, "pressure": 0.5},
-                            {"time": 1727197915937, "x": 117, "y": 104, "pressure": 0.5},
-                            {"time": 1727197915954, "x": 119, "y": 112, "pressure": 0.5},
-                            {"time": 1727197915970, "x": 124, "y": 119, "pressure": 0.5},
-                            {"time": 1727197915986, "x": 130, "y": 127, "pressure": 0.5},
-                            {"time": 1727197916003, "x": 144, "y": 135, "pressure": 0.5},
-                            {"time": 1727197916020, "x": 161, "y": 138, "pressure": 0.5},
-                            {"time": 1727197916035, "x": 177, "y": 136, "pressure": 0.5},
-                            {"time": 1727197916051, "x": 189, "y": 128, "pressure": 0.5},
-                            {"time": 1727197916067, "x": 197, "y": 119, "pressure": 0.5},
-                            {"time": 1727197916083, "x": 205, "y": 108, "pressure": 0.5},
-                            {"time": 1727197916100, "x": 212, "y": 99, "pressure": 0.5},
-                            {"time": 1727197916134, "x": 217, "y": 93, "pressure": 0.5},
-                            {"time": 1727197916178, "x": 223, "y": 96, "pressure": 0.5},
-                            {"time": 1727197916195, "x": 228, "y": 100, "pressure": 0.5},
-                            {"time": 1727197916213, "x": 234, "y": 104, "pressure": 0.5},
-                            {"time": 1727197916248, "x": 240, "y": 113, "pressure": 0.5}
-                        ]
-                    }
-                ],
-                "color": "#000000",
-                "form": {},
-                "settings": {},
-                "heading": "Signature",
-                "description": "Signature capture block",
-                "hidden": false,
-                "config": {
-                    "id": "5u4ldd1pbqv3RRPfNyfN9",
-                    "type": "special-signature",
-                    "label": "",
-                    "value": "",
-                    "color": "#000000"
-                },
-                "group": {"label": "Special"}
+        "id": 4,
+        "label": "Demo form",
+        "created_at": "2024-07-08T16:01:02",
+        "items": [
+            {
+                "id": "KAhmRfNYvIxH3oU1rHQA-",
+                "type": "select-select",
+                "label": "",
+                "value": "",
+                "source": "employees",
+                "options": [],
+                "placeholder": ""
             }
         ]
     });
+    console.log("BuilderDemo")
     
     const [formJSON, setFormJSON] = useState(JSON.stringify(form));
     //
@@ -92,10 +41,90 @@ const BuilderDemo: FC = () => {
     };
     
     
+    // we have the employee payload right here right now
+    const employee_data = {
+        pagination:{
+            page:1,
+            paginate:0
+        },
+        employees: [
+            {id: 1,first_name: "a", last_name: "b",role:"dev"},
+            {id: 2,first_name: "c", last_name: "d",role:"dev"},
+            {id: 3,first_name: "e", last_name: "f",role:"dev"},
+        ]
+    }
+    
+    // this will probably be an axios call
+    const sites_data = new Promise((resolve, reject) => {
+        let isTrue = true;
+        if (isTrue) {
+            resolve({
+                pagination: {
+                    page: 1,
+                    paginate: 0
+                },
+                list: [
+                    {key: "x", site: "Some site x"},
+                    {key: "y", site: "Some site y"},
+                    {key: "z", site: "Some site z"},
+                ]
+            });
+        } else {
+            reject({error:"Couldnt fetch"});
+        }
+    });
+    
+    const config = new Config()
+    config.external_select_options = [
+        {
+            key: "employees",
+            label: "Site Employees",
+            options_func: async ()=>{
+                console.log("Fetching employees","~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                return employee_data.employees.map((item) => {
+                    return {
+                        value: item.id, label: `${item.first_name} ${item.last_name}`
+                    }}
+                )
+            }
+        },
+        {
+            key: "sites",
+            label: "Company Sites",
+            options_func: async ()=> {
+                console.log("Fetching sites", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                return sites_data.then((payload)=> {
+                    return payload.list.map((item) => {
+                            return {
+                                value: item.key, label: item.site
+                            }
+                        }
+                    )
+                })
+                .catch((payload) => alert("Something went wrong"))
+            }
+        }
+    ]
+    // config.forms = [
+    //     {
+    //         label: "hammer",
+    //         config: {id: 7, items: [{type:"form",form_id:9},{type:"select",option_source:"employees"}]}
+    //     },
+    //     {
+    //         label: "screwdriver",
+    //         config: {id: 8, items: [{type: "form", form_id: 9}]}
+    //     },
+    //     {
+    //         label: "plaster",
+    //         config: {id: 9, items: []}
+    //     },
+    //
+    // ]
+    
     return (
         <>
             <div id="builder">
-                <FormBuilder form={form} onChange={onChange}/>
+                <FormBuilder form={form} onChange={onChange} config={config}/>
             </div>
             
             <div id="output">

@@ -9,6 +9,7 @@ export type SelectOptionType = {
 export type ItemConfigType = ItemType & {
     label: string
     value: string
+    source: string
     options: SelectOptionType[]
     placeholder: string
 }
@@ -17,6 +18,7 @@ export const itemConfig: ItemConfigType = {
     type: "select-select",
     label: "",
     value: "",
+    source: "local",
     options: [],
     placeholder: ""
 };

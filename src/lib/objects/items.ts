@@ -1,3 +1,4 @@
+import Config from "@/lib/objects/config.ts";
 import {Group} from "./groups.ts";
 import React from "react";
 
@@ -10,8 +11,9 @@ export type ItemOnChangeType = (item: ItemType) => void
 
 
 export interface FieldComponentProps {
-    config: ItemType;
+    item: ItemType;
     onChange: (value: ItemType) => void;
+    config: Config
 }
 
 export class ItemRendererInit {
@@ -41,7 +43,7 @@ export class ItemInit {
         public description: string,
         public hidden: boolean,
         public icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>,
-        public config: ItemType,
+        public data: ItemType,
         public group?: Group,
     ) {
         if (!this.group) {
@@ -64,7 +66,7 @@ export class Item extends ItemInit {
             init.description,
             init.hidden,
             init.icon,
-            init.config,
+            init.data,
             init.group,
         );
     }

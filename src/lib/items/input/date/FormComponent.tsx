@@ -6,15 +6,14 @@ import React, {useEffect, useState} from "react";
 import {ItemConfigType, itemConfig} from "./config.ts";
 
 
-const FormComponent: React.FC<FieldComponentProps> = ({config, onChange}) => {
-    const [item, setItem] = useState<ItemConfigType>({...itemConfig, ...config});
+const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+    const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
-        setItem({...itemConfig, ...config});
-    }, [config]);
+        setItem({...itemConfig, ...item});
+    }, [item]);
     
     const handleOnChange = (event: FormEvent<(Date | null)[]>) => {
-        console.log(event.value);
-        const updatedData: DateInputConfig = {...{...itemConfig, ...config}, value: event.value};
+        const updatedData: DateInputConfig = {...{...itemConfig, ...item}, value: event.value};
         onChange(updatedData);
         setItem(updatedData);
         // console.log(event.value as Date);
