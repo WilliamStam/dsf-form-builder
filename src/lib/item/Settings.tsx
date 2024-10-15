@@ -1,10 +1,12 @@
 import items from "@/lib/items";
 import {Config, ItemType} from "@/lib/objects";
+import {FormType} from "@/lib/objects";
 import React from "react";
 
-export const Settings = ({item, onChange, config}: {
+export const Settings = ({item, onChange, form, config}: {
     item: ItemType,
     onChange: (item: ItemType) => void,
+    form: FormType,
     config: Config
 }) => {
     const item_object = items.getByItem(item);
@@ -12,6 +14,7 @@ export const Settings = ({item, onChange, config}: {
         return React.createElement(item_object.settings.render, {
             item: item,
             onChange: onChange,
+            form:form,
             config:config
         });
     }

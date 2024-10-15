@@ -1,3 +1,4 @@
+import {FormType} from "@/lib";
 import Config from "@/lib/objects/config.ts";
 import {Group} from "./groups.ts";
 import React from "react";
@@ -13,14 +14,16 @@ export type ItemOnChangeType = (item: ItemType) => void
 export interface FieldComponentProps {
     item: ItemType;
     onChange: (value: ItemType) => void;
+    form: FormType,
     config: Config
 }
+type ValidationFunction = (item: any) => { [key: string]: string[] }
 
 export class ItemRendererInit {
     constructor(
         public render: React.FC<FieldComponentProps>,
         /* tslint:disable-next-line:no-any */
-        public validation: (item: any) => { [key: string]: string[] }
+        public validation: ValidationFunction | null | undefined
     ) {
     }
 }

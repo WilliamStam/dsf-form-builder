@@ -15,7 +15,7 @@ export type ItemConfigType = ItemType & {
 }
 export const itemConfig: ItemConfigType = {
     id: nanoid(),
-    type: "select-select",
+    type: "input-select",
     label: "",
     value: "",
     source: "local",

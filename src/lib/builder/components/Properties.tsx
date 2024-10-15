@@ -94,7 +94,7 @@ export default function Properties({...props}: {
                          <Button onClick={handleCancel} size="small" outlined={true} icon="pi pi-times"/>
                     </div>
                     
-                    <Settings item={editing_item} onChange={handleFormItemChange} config={props.config}></Settings>
+                    <Settings item={editing_item} onChange={handleFormItemChange} form={editing_form} config={props.config}></Settings>
                     
                     {/* <Button onClick={handleCancel} size="small" className={"w-full"}>Done</Button> */}
                     </div>

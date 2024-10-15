@@ -1,3 +1,5 @@
+import {FormType} from "@/lib";
+
 export type ConfigExternalDataResponseType = {
     value: any;
     label: string;
@@ -13,6 +15,7 @@ export type ConfigExternalSelectData = {
 export class Config {
     constructor(
         public external_select_options: ConfigExternalSelectData[] = [],
+        public forms: FormType[] = []
     ) {
     }
 }

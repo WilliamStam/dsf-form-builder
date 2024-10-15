@@ -10,8 +10,10 @@ import {ButtonGroup} from "primereact/buttongroup";
 import {confirmDialog} from "primereact/confirmdialog";
 import {useEffect, useState} from "react";
 
+import {itemConfig as FormItemConfig} from "@/lib/items/special/form/config";
 
-export function SortableItem({id, item, active, setActive, onItemChange, onItemRemove, config}: {
+
+export function SortableItem({id, item, active, setActive, onItemChange, onItemRemove, config, form}: {
     id: string,
     item: ItemType,
     active?: ItemType,
@@ -19,6 +21,7 @@ export function SortableItem({id, item, active, setActive, onItemChange, onItemR
     onItemChange: (item: ItemType) => void
     onItemRemove: (id: string) => void
     config: Config
+    form: FormType
 }) {
     
     const {attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition} =
@@ -41,6 +44,7 @@ export function SortableItem({id, item, active, setActive, onItemChange, onItemR
         className = className + " active";
     }
     
+    const mask_block:boolean = [FormItemConfig.type].includes(item.type)
     
     const confirm = () => {
         confirmDialog({
@@ -60,7 +64,12 @@ export function SortableItem({id, item, active, setActive, onItemChange, onItemR
         <>
             <div ref={setNodeRef} style={style} {...attributes} className={className}>
                 
-                <Item item={item} onChange={onItemChange} config={config}/>
+                <Item item={item} onChange={onItemChange} config={config} form={form}/>
+                {}
+                {mask_block ? (
+                    <div className="mask"></div>
+                ): null}
+                
                 
                 <div className="flex flex-row align-items-center item-footer">
                     <div className="flex-grow-1 item-type"> {item.type}</div>
@@ -157,6 +166,7 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem, c
                     onItemChange={handleItemChange}
                     onItemRemove={handleItemRemove}
                     config={config}
+                    form={form}
                 />
             ))}
         </div>

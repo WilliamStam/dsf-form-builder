@@ -4,25 +4,12 @@ import "./index.css";
 import {FormType} from "@/lib/objects";
 import {Config} from "@/lib/objects";
 import {FC, useState} from "react";
-
+import {Form} from "@/lib/form";
 
 const BuilderDemo: FC = () => {
-    const [form, setForm] = useState({
-        "id": 4,
-        "label": "Demo form",
-        "created_at": "2024-07-08T16:01:02",
-        "items": [
-            {
-                "id": "KAhmRfNYvIxH3oU1rHQA-",
-                "type": "select-select",
-                "label": "",
-                "value": "",
-                "source": "employees",
-                "options": [],
-                "placeholder": ""
-            }
-        ]
-    });
+    
+    const [view, setView] = useState("builder")
+    const [form, setForm] = useState();
     console.log("BuilderDemo")
     
     const [formJSON, setFormJSON] = useState(JSON.stringify(form));
@@ -105,31 +92,49 @@ const BuilderDemo: FC = () => {
             }
         }
     ]
-    // config.forms = [
-    //     {
-    //         label: "hammer",
-    //         config: {id: 7, items: [{type:"form",form_id:9},{type:"select",option_source:"employees"}]}
-    //     },
-    //     {
-    //         label: "screwdriver",
-    //         config: {id: 8, items: [{type: "form", form_id: 9}]}
-    //     },
-    //     {
-    //         label: "plaster",
-    //         config: {id: 9, items: []}
-    //     },
-    //
-    // ]
+    config.forms = [
+           {id: 4, label: "Test Form", items: [{id:"1",type:"embedded-form",form_id:7},{id: "2",type:"input-select",
+                   source:"employees"}]},
+           {id: 7, label: "hammer", items: [{id: "1",type:"embedded-form",form_id:8},{id: "2",type:"input-select",
+                   source:"sites"}]},
+           {id: 8, label: "screwdriver", items: [{id: "1", type: "input-text", value: "something"}]},
+           {id: 9, label: "plaster", items: []},
+    ]
+    
+    if (!form){
+        setForm(config.forms[0])
+    }
     
     return (
         <>
-            <div id="builder">
-                <FormBuilder form={form} onChange={onChange} config={config}/>
-            </div>
+            
+            
+                {view =="builder" ? (
+                        <div id="builder">
+                    <FormBuilder
+                        form={form}
+                        onChange={onChange}
+                        config={config}
+                    />
+                            </div>
+                ): (
+                    <div id="form">
+                    <Form
+                        form={form}
+                        onChange={onChange}
+                        config={config}
+                    />
+                    </div>
+                )}
+            
             
             <div id="output">
+                <div>
+                    <button onClick={() => setView("builder")}>builder</button>
+                    <button onClick={() => setView("form")}>form</button>
+                </div>
+                
                 <textarea
-                    style={{height: "100%", width: "100%"}}
                     value={formJSON}
                     onChange={handleOnChange}
                 ></textarea>
