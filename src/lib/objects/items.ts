@@ -19,17 +19,17 @@ export interface FieldComponentProps<T> {
 }
 type ValidationFunction = (item: any) => { [key: string]: string[] }
 
-export class ItemRendererInit {
+export class ItemRendererInit<T extends ItemType> {
     constructor(
-        public render: React.FC<FieldComponentProps<ItemType>>,
+        public render: React.FC<FieldComponentProps<T>>,
         /* tslint:disable-next-line:no-any */
         public validation: ValidationFunction | null | undefined
     ) {
     }
 }
 
-export class ItemRenderer extends ItemRendererInit {
-    constructor(init: ItemRendererInit) {
+export class ItemRenderer extends ItemRendererInit<ItemType> {
+    constructor(init: ItemRendererInit<ItemType>) {
         super(
             init.render,
             init.validation,
@@ -120,9 +120,4 @@ export class ItemRegistry {
         return this.items.map((item, index, array) => callback(item, index, array));
     }
     
-}
-
-
-const fix_item_config: ItemType = (items: ItemRegistry, item: ItemType) => {
-    console.log("looking at ", item)
 }

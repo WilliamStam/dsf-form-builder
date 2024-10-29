@@ -19,8 +19,8 @@ declare type ConfigExternalSelectData = {
     options_func?: () => Promise<ConfigExternalDataResponseType[]>;
 };
 
-declare interface FieldComponentProps {
-    item: ItemType;
+declare interface FieldComponentProps<T> {
+    item: T;
     onChange: (value: ItemType) => void;
     form: FormType;
     config: Config;
@@ -28,7 +28,7 @@ declare interface FieldComponentProps {
 
 export declare const Form: ({ ...props }: {
     form: FormType;
-    onChange: (form: FormType) => void;
+    onChange: (value: FormType) => void;
     config: Config;
 }) => JSX_2.Element;
 
@@ -50,7 +50,7 @@ export declare const Item: ({ item, onChange, form, config }: {
     onChange: (item: ItemType) => void;
     form: FormType;
     config: Config;
-}) => default_2.FunctionComponentElement<FieldComponentProps> | default_2.FunctionComponentElement<{}>;
+}) => default_2.FunctionComponentElement<FieldComponentProps<ItemType>> | default_2.FunctionComponentElement<{}>;
 
 export declare type ItemType = {
     id: string;

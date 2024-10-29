@@ -3,7 +3,7 @@ import Properties from "@/lib/builder/components/Properties.tsx";
 import Sidebar, {SidebarField} from "@/lib/builder/components/Sidebar.tsx";
 import {Item} from "@/lib/item";
 import {Config, ItemType} from "@/lib/objects";
-import {formState, FormType, fixFormObject} from "@/lib/objects/forms.ts";
+import {formState, FormType} from "@/lib/objects/forms.ts";
 import {
     Active,
     closestCenter,
