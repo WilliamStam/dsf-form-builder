@@ -4,6 +4,7 @@ import {nanoid} from "nanoid";
 export type ItemConfigType = ItemType & {
     label: string
     form_id: number | string
+    items: ItemType[]
 }
 
 export const itemConfig: ItemConfigType = {
@@ -11,4 +12,5 @@ export const itemConfig: ItemConfigType = {
     type: "embedded-form",
     label: "",
     form_id: "",
+    items:[]
 };

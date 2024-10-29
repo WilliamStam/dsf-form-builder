@@ -3,7 +3,7 @@ import Properties from "@/lib/builder/components/Properties.tsx";
 import Sidebar, {SidebarField} from "@/lib/builder/components/Sidebar.tsx";
 import {Item} from "@/lib/item";
 import {Config, ItemType} from "@/lib/objects";
-import {formState, FormType} from "@/lib/objects/forms.ts";
+import {formState, FormType, fixFormObject} from "@/lib/objects/forms.ts";
 import {
     Active,
     closestCenter,
@@ -22,12 +22,8 @@ import {arrayMove, rectSwappingStrategy, SortableContext, sortableKeyboardCoordi
 import {nanoid} from "nanoid";
 import {ConfirmDialog} from "primereact/confirmdialog";
 import {useEffect, useState} from "react";
-import "./styles/builder.scss";
-import "primereact/resources/themes/lara-light-cyan/theme.css";
-// import "primereact/resources/themes/lara-dark-cyan/theme.css";
-import "primereact/resources/primereact.min.css"; //core css
-import "primeicons/primeicons.css"; //icons
-import "primeflex/primeflex.css";
+import "@/lib/styles/styles.scss";
+
 
 // import style from "./style.css";
 
@@ -187,6 +183,7 @@ export const FormBuilder = ({...props}: {
         config: props.config
     };
     
+    
     if (form) {
         return (
             <>
@@ -219,8 +216,9 @@ export const FormBuilder = ({...props}: {
                             {activeSidebarField ? (
                                 <SidebarField item={activeSidebarField}/>
                             ) : null} {activeField ? <Item
-                            item={activeField} onChange={() => {
-                        }} config={props.config}
+                            item={activeField}
+                            onChange={() => {
+                        }} config={props.config} form={props.form}
                         /> : null}
                         </DragOverlay>
                     </DndContext>

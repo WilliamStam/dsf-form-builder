@@ -23,18 +23,18 @@ import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import {RadioButton, RadioButtonChangeEvent} from "primereact/radiobutton";
 import React, {useEffect, useState} from "react";
-import {itemConfig, ItemConfigType, SelectOptionType} from "./config.ts";
+import {itemConfig, ItemConfigType, OptionType} from "./config.ts";
 
 
 const SettingsEditOptionItem = ({option, onChange, index}: {
-    option: SelectOptionType,
-    onChange: (option: SelectOptionType | null) => void,
+    option: OptionType,
+    onChange: (option: OptionType | null) => void,
     index: string,
 }) => {
-    const [data, setData] = useState<SelectOptionType>(option);
+    const [data, setData] = useState<OptionType>(option);
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: SelectOptionType = {
+        const updatedData: OptionType = {
             ...{value: data.value, label: data.label},
             [event.target.name]: event.target.value
         };
@@ -98,16 +98,16 @@ const SettingsEditOptionItem = ({option, onChange, index}: {
     );
 };
 const SettingsAddOptionItem = ({onInsert}: {
-    onInsert: (option: SelectOptionType) => void
+    onInsert: (option: OptionType) => void
 }) => {
-    const empty_data: SelectOptionType = {
+    const empty_data: OptionType = {
         value: "",
         label: ""
     };
-    const [data, setData] = useState<SelectOptionType>(empty_data);
+    const [data, setData] = useState<OptionType>(empty_data);
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: SelectOptionType = {
+        const updatedData: OptionType = {
             ...{value: data.value, label: data.label},
             [event.target.name]: event.target.value
         };
@@ -155,7 +155,7 @@ const SettingsAddOptionItem = ({onInsert}: {
 const CustomSelectOptions: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, form, config}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
-    const handleOptionsOnChange = (option: SelectOptionType | null, index: number) => {
+    const handleOptionsOnChange = (option: OptionType | null, index: number) => {
         const new_options = clone_object(data.options);
         if (option) {
             new_options[index] = option;
@@ -167,7 +167,7 @@ const CustomSelectOptions: React.FC<FieldComponentProps<ItemConfigType>> = ({ite
         onChange(new_data);
     };
     
-    const addNewOption = (option: SelectOptionType) => {
+    const addNewOption = (option: OptionType) => {
         const new_options = clone_object(data.options);
         new_options.push(option);
         const new_data = {...data, options: new_options};
@@ -266,16 +266,7 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, form,
                                 className="w-full"
                             />
                         </div>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor={"placeholder"}>Placeholder</label>
-                            <InputText
-                                id={"placeholder"}
-                                value={data.placeholder || ""}
-                                name={"placeholder"}
-                                onChange={handleOnChange}
-                                className="w-full"
-                            />
-                        </div>
+                       
                     </div>
                 </AccordionTab>
                 <AccordionTab header="Options" key="options">

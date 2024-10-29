@@ -3,8 +3,7 @@ import {Config, FormType, Item, ItemType, onFormChangeType} from "@/lib/objects"
 import {useDraggable} from "@dnd-kit/core";
 import {nanoid} from "nanoid";
 import {Accordion, AccordionTab} from "primereact/accordion";
-import {TabPanel, TabView} from "primereact/tabview";
-import {useRef, useState} from "react";
+import {useRef} from "react";
 
 export function SidebarField({item}: {
     item: Item
@@ -54,7 +53,6 @@ export default function Sidebar({...props}: {
     setActiveItem: (item: ItemType | undefined) => void,
     config: Config,
 }) {
-    const [panelIndex, setPanelIndex] = useState<number>(0);
     
     type paneltype = {
         label: string,
@@ -74,22 +72,13 @@ export default function Sidebar({...props}: {
         items_list[k]["items"].push(item);
     });
     
-    const storePanelIndex = (index: number) => {
-        setPanelIndex(index);
-    };
-    
     
     return (
         <>
-            <TabView
-                activeIndex={panelIndex}
-                onTabChange={(e) => storePanelIndex(e.index)}
-                className="sidebar"
-            >
-                <TabPanel header="Items">
+          
                     {/* <IconField iconPosition="left"> */} {/*     <InputIcon className="pi pi-search"/> */} {/*     <InputText */} {/*         v-model="value1" */} {/*         placeholder="Search" */} {/*         className={"w-full my-3"} */} {/*     /> */} {/* </IconField> */}
-                    
-                    <Accordion activeIndex={0}>
+            
+            <Accordion activeIndex={0}>
                         {Object.keys(items_list).map((k) => {
                             return (
                                 <AccordionTab header={items_list[k].label} key={k}>
@@ -102,15 +91,7 @@ export default function Sidebar({...props}: {
                     
                     </Accordion>
             
-                </TabPanel>
-                <TabPanel header="Forms">
-                    forms {JSON.stringify(props.form)}
-                </TabPanel>
-                <TabPanel header="Variables">
-                    list of variables this form can replace
-                </TabPanel>
-            </TabView>
-        
+              
         
         </>
     );

@@ -3,7 +3,8 @@ import { JSX as JSX_2 } from 'react/jsx-runtime';
 
 declare class Config {
     external_select_options: ConfigExternalSelectData[];
-    constructor(external_select_options?: ConfigExternalSelectData[]);
+    forms: FormType[];
+    constructor(external_select_options?: ConfigExternalSelectData[], forms?: FormType[]);
 }
 
 declare type ConfigExternalDataResponseType = {
@@ -21,8 +22,15 @@ declare type ConfigExternalSelectData = {
 declare interface FieldComponentProps {
     item: ItemType;
     onChange: (value: ItemType) => void;
+    form: FormType;
     config: Config;
 }
+
+export declare const Form: ({ ...props }: {
+    form: FormType;
+    onChange: (form: FormType) => void;
+    config: Config;
+}) => JSX_2.Element;
 
 export declare const FormBuilder: ({ ...props }: {
     form: FormType;
@@ -37,9 +45,10 @@ export declare type FormType = {
     items: ItemType[];
 };
 
-export declare const Item: ({ item, onChange, config }: {
+export declare const Item: ({ item, onChange, form, config }: {
     item: ItemType;
     onChange: (item: ItemType) => void;
+    form: FormType;
     config: Config;
 }) => default_2.FunctionComponentElement<FieldComponentProps> | default_2.FunctionComponentElement<{}>;
 

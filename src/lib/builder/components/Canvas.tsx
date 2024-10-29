@@ -155,20 +155,22 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem, c
     
     return (<>
             {/* <div>config: {JSON.stringify(config.external_select_options)}</div> */}
-        <div ref={setNodeRef} className="canvas" style={style} {...listeners}>
-            {items?.map((item) => (
-                <SortableItem
-                    key={item.id}
-                    id={item.id}
-                    item={item}
-                    active={activeItem}
-                    setActive={setActiveItem}
-                    onItemChange={handleItemChange}
-                    onItemRemove={handleItemRemove}
-                    config={config}
-                    form={form}
-                />
-            ))}
+            
+            <div ref={setNodeRef} className="canvas form-area" style={style} {...listeners}>
+            <h1>{form.label}</h1>
+                {items?.map((item) => (
+                    <SortableItem
+                        key={item.id}
+                        id={item.id}
+                        item={item}
+                        active={activeItem}
+                        setActive={setActiveItem}
+                        onItemChange={handleItemChange}
+                        onItemRemove={handleItemRemove}
+                        config={config}
+                        form={form}
+                    />
+                ))}
         </div>
         </>
     );

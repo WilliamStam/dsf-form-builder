@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 import {ItemConfigType, itemConfig} from "./config.ts";
 
 
-const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setItem({...itemConfig, ...item});
@@ -25,13 +25,16 @@ const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) 
     
     return (
         <>
-            <Calendar// value={date} // viewDate={date}
-                onChange={(e) => {
-                    // setDate(e.value);
-                    console.log(e.value);
-                }}
-                dateFormat="yy-mm-dd"
-            />
+            <article>
+                 <Calendar// value={date} // viewDate={date}
+                     onChange={(e) => {
+                         // setDate(e.value);
+                         console.log(e.value);
+                     }}
+                     dateFormat="yy-mm-dd"
+                 />
+            </article>
+           
             
         </>
     );

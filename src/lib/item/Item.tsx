@@ -14,7 +14,7 @@ export const Item = ({item, onChange, form, config}: {
             item: item,
             onChange: onChange,
             form:form,
-            config:config
+            config:config,
         });
     }
     // component doesn't exist yet

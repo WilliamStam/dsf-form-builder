@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 import SignaturePad from 'react-signature-pad-wrapper';
 
-const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setData({...itemConfig, ...item});
@@ -52,16 +52,21 @@ const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) 
     
     return (
         <>
-            <div className="flex flex-column gap-2">
+            <article>
+                <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
                 <div>
-                    <SignaturePad ref={signaturePadRef}  options={{ penColor: 'rgb(0, 0, 0)'}} redrawOnResize={true}
-                        canvasProps={{style: style}}  />
+                    <SignaturePad
+                        ref={signaturePadRef} options={{penColor: 'rgb(0, 0, 0)'}} redrawOnResize={true}
+                        canvasProps={{style: style}}
+                    />
                 </div>
                 
                 <button onClick={handleClear}>clear</button>
                 <button onClick={handleSave}>save</button>
             </div>
+            </article>
+            
         </>
     );
 };

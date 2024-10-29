@@ -1,20 +1,15 @@
 import {Config, ItemType} from "@/lib/objects";
 import {formState, FormType} from "@/lib/objects/forms.ts";
-import "primereact/resources/themes/lara-light-cyan/theme.css";
-// import "primereact/resources/themes/lara-dark-cyan/theme.css";
-import "primereact/resources/primereact.min.css"; //core css
-import "primeicons/primeicons.css"; //icons
-import "primeflex/primeflex.css";
 
 import {Item} from "@/lib/item"
 import {useEffect} from "react";
-
+import "@/lib/styles/styles.scss";
 // import style from "./style.css";
 
 
 export const Form = ({...props}: {
     form: FormType,
-    onChange: (form: FormType) => void,
+    onChange: (value: FormType) => void,
     config: Config
 }) => {
     const {form, setForm} = formState(props.form);

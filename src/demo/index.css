@@ -1,8 +1,10 @@
 body {
     margin:0;
 }
-#builder, #form {
+#main {
     height: calc(100vh - 10rem);
+    overflow-y: auto;
+    border:1px solid var(--surface-d);
 }
 #output {
     height:10rem;

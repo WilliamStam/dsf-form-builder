@@ -1,6 +1,6 @@
 import {FieldComponentProps, FormType} from "@/lib/objects";
 import {Accordion, AccordionTab} from "primereact/accordion";
-import {Dropdown} from "primereact/dropdown";
+import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
 import {InputText} from "primereact/inputtext";
 import {SelectItemOptionsType} from "primereact/selectitem";
 import React, {useEffect, useState} from "react";
@@ -9,10 +9,10 @@ import {itemConfig, ItemConfigType} from "./config.ts";
 
 
 
-const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, form, config}) => {
+const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, form, config}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement> | DropdownChangeEvent) => {
         const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
         setData(updatedData);
         onChange(updatedData);
@@ -60,8 +60,6 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, form,
                     className={"w-full"}
                 > </Dropdown>
             </div>
-                    <div>{JSON.stringify(form)}</div>
-                    <div>{JSON.stringify(options)}</div>
             </AccordionTab>
             
             </Accordion>

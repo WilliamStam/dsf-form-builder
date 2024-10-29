@@ -11,8 +11,8 @@ export type ItemType = {
 export type ItemOnChangeType = (item: ItemType) => void
 
 
-export interface FieldComponentProps {
-    item: ItemType;
+export interface FieldComponentProps<T> {
+    item: T;
     onChange: (value: ItemType) => void;
     form: FormType,
     config: Config
@@ -21,7 +21,7 @@ type ValidationFunction = (item: any) => { [key: string]: string[] }
 
 export class ItemRendererInit {
     constructor(
-        public render: React.FC<FieldComponentProps>,
+        public render: React.FC<FieldComponentProps<ItemType>>,
         /* tslint:disable-next-line:no-any */
         public validation: ValidationFunction | null | undefined
     ) {
@@ -120,4 +120,9 @@ export class ItemRegistry {
         return this.items.map((item, index, array) => callback(item, index, array));
     }
     
+}
+
+
+const fix_item_config: ItemType = (items: ItemRegistry, item: ItemType) => {
+    console.log("looking at ", item)
 }

@@ -4,14 +4,15 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
 
-const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setData({...itemConfig, ...item});
     }, [item]);
     
+    
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: ItemConfigType = {...{...itemConfig, ...config}, value: event.target.value};
+        const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
         onChange(updatedData);
         // setData(updatedData);
     };
@@ -21,7 +22,8 @@ const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) 
     
     return (
         <>
-            <div className="flex flex-column gap-2">
+            <article>
+                <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
                 <InputText
                     value={data.value}
@@ -31,6 +33,8 @@ const FormComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) 
                     id={id}
                 ></InputText>
             </div>
+            </article>
+            
         </>
     );
 };

@@ -5,7 +5,7 @@ import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
-const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {

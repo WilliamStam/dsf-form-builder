@@ -1,0 +1,18 @@
+.form-area {
+    padding:1rem;
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .form-area {
+        padding:0;
+        h1 {
+            font-size: 1.3rem;
+        }
+    }
+    
+    & > article {
+       padding-top:0.8rem;
+       padding-bottom:0.8rem;
+    }
+}
