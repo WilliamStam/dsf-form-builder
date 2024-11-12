@@ -93430,7 +93430,6 @@ const CQ = ({ children: i, activeItem: t, setActiveItem: e }) => {
   };
   return t && t.id ? /* @__PURE__ */ _.jsx(_.Fragment, { children: /* @__PURE__ */ _.jsxs("div", { className: "form-area", children: [
     /* @__PURE__ */ _.jsx("h1", { children: t.label }),
-    JSON.stringify(r),
     r.map((a) => /* @__PURE__ */ _.jsx(
       lb,
       {

@@ -56,7 +56,6 @@ export const Form = ({...props}: {
             <>
                 <div className="form-area">
                     <h1>{form.label}</h1>
-                    {JSON.stringify(items)}
                     {items.map((item) => (
                         <Item
                             key={item.id}
