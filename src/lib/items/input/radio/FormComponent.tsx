@@ -1,11 +1,13 @@
-import {ConfigExternalSelectData, FieldComponentProps} from "@/lib/objects";
+import {ConfigExternalDataType, FieldComponentProps} from "@/lib/objects";
+import {useConfigStore} from "@/lib/stores";
 import {RadioButton, RadioButtonChangeEvent} from "primereact/radiobutton";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType, OptionType} from "./config.ts";
 
-const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
-    const [options, setOptions] = useState<OptionType[]>(data.options)
+    const [options, setOptions] = useState<OptionType[]>(data.options);
     
     useEffect(() => {
         setData({...itemConfig, ...item});
@@ -15,15 +17,15 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
         setOptions(data.options);
         if (data.source != "local") {
             // console.log("CONFIG", config, data.source)
-            const external: ConfigExternalSelectData | undefined = config.external_select_options.find((item) => item.key == data.source)
+            const external: ConfigExternalDataType | undefined = config.external_data.find((item) => item.key == data.source);
             if (external) {
                 if (external.options) {
-                    setOptions(external.options)
+                    setOptions(external.options);
                 }
                 if (external.options_func) {
                     external.options_func().then((y: OptionType[]) => {
-                        setOptions(y)
-                    })
+                        setOptions(y);
+                    });
                     
                     // options = await external.options_func() ?? []
                 }
@@ -38,16 +40,15 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     };
     
     
-    
     const id = Math.random().toString(36).substring(2, 15);
     return (
         <>
             <article>
                 <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
-                {options.map((option) => {
-                    return (
-                        <div key={option.value} className="flex align-items-center">
+                    {options.map((option) => {
+                        return (
+                            <div key={`${item.id}-${option.value}`} className="flex align-items-center">
                         <RadioButton
                             inputId={option.value}
                             name="value"
@@ -57,8 +58,8 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
                         />
                         <label htmlFor={option.value} className="ml-2">{option.label}</label>
                     </div>
-                    );
-                })}
+                        );
+                    })}
                 
             </div>
             </article>
@@ -68,6 +69,6 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
 };
 export const FormValidation = (item: ItemConfigType) => {
     console.log("Validation", item);
-    return {}
+    return {};
 };
 export default FormComponent;

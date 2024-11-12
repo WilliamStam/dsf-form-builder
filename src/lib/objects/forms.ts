@@ -1,6 +1,5 @@
-import {useState} from "react";
-import {ItemType} from "./items.ts";
 import items from "@/lib/items";
+import {ItemType} from "./items.ts";
 
 export type FormType = {
     id: number | null,
@@ -10,7 +9,7 @@ export type FormType = {
 }
 
 export type onFormChangeType = (form: FormType) => void;
-const empty_form = {
+export const empty_form = {
     id: null,
     label: null,
     created_at: null,
@@ -18,27 +17,27 @@ const empty_form = {
 };
 
 
-const fixFormItems = (value: FormType) : FormType => {
+export const fixFormItems = (value: FormType): FormType => {
     value.items.map((item: ItemType) => {
-        let real_item = items.getByItem(item)
+        let real_item = items.getByItem(item);
         if (real_item) {
-            console.log("fixing item", item, real_item.data, {...real_item.data, ...item})
-            return {...real_item.data, ...item}
+            console.log("fixing item", item, real_item.data, {...real_item.data, ...item});
+            return {...real_item.data, ...item};
         }
-        return item
-    })
-    return value
-}
-
-export const formState = (initial_form: FormType = empty_form) => {
-    const form_data = {...{...empty_form, ...initial_form}}
-    
-    const [form, _setFormHandler] = useState(fixFormItems(form_data));
-    return {
-        form,
-        setForm: (new_form: FormType) => {
-            
-            _setFormHandler(fixFormItems({...{...empty_form, ...new_form}}));
-        },
-    };
+        return item;
+    });
+    return value;
 };
+//
+// export const formState = (initial_form: FormType = empty_form) => {
+//     const form_data = {...{...empty_form, ...initial_form}}
+//
+//     const [form, _setFormHandler] = useState(fixFormItems(form_data));
+//     return {
+//         form,
+//         setForm: (new_form: FormType) => {
+//
+//             _setFormHandler(fixFormItems({...{...empty_form, ...new_form}}));
+//         },
+//     };
+// };

@@ -1,7 +1,5 @@
-import {FormType} from "@/lib";
-import Config from "@/lib/objects/config.ts";
-import {Group} from "./groups.ts";
 import React from "react";
+import {Group} from "./groups.ts";
 
 
 export type ItemType = {
@@ -14,9 +12,8 @@ export type ItemOnChangeType = (item: ItemType) => void
 export interface FieldComponentProps<T> {
     item: T;
     onChange: (value: ItemType) => void;
-    form: FormType,
-    config: Config
 }
+
 type ValidationFunction = (item: any) => { [key: string]: string[] }
 
 export class ItemRendererInit<T extends ItemType> {
@@ -80,15 +77,14 @@ export class ItemRegistry {
     constructor(
         public group: Group | null = null,
         public items: Item[] = [],
-        
     ) {
     }
     
     registerItem(item: Item, group?: Group): void {
         if (group) {
             item.group = group;
-        } else if (this.group){
-            item.group = this.group
+        } else if (this.group) {
+            item.group = this.group;
         }
         this.items.push(item);
     }
@@ -105,6 +101,7 @@ export class ItemRegistry {
         }
         return undefined;
     }
+    
     //
     // getByType(type: string): Item | undefined {
     //     return this.items.find(item => item.type === type);

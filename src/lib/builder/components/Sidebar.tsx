@@ -1,5 +1,5 @@
 import items from "@/lib/items";
-import {Config, FormType, Item, ItemType, onFormChangeType} from "@/lib/objects";
+import {Item, ItemType} from "@/lib/objects";
 import {useDraggable} from "@dnd-kit/core";
 import {nanoid} from "nanoid";
 import {Accordion, AccordionTab} from "primereact/accordion";
@@ -47,12 +47,11 @@ function DraggableSidebarField({item}: {
 }
 
 export default function Sidebar({...props}: {
-    form: FormType,
-    onFormChange: onFormChangeType,
     activeItem?: ItemType,
     setActiveItem: (item: ItemType | undefined) => void,
-    config: Config,
 }) {
+    // const {form, setForm} = useFormStore();
+    // const {config, setConfig} = useConfigStore();
     
     type paneltype = {
         label: string,

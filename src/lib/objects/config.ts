@@ -4,7 +4,7 @@ export type ConfigExternalDataResponseType = {
     value: any;
     label: string;
 }
-export type ConfigExternalSelectData = {
+export type ConfigExternalDataType = {
     key: string;
     label: string;
     options?: ConfigExternalDataResponseType[];
@@ -14,7 +14,7 @@ export type ConfigExternalSelectData = {
 
 export class Config {
     constructor(
-        public external_select_options: ConfigExternalSelectData[] = [],
+        public external_data: ConfigExternalDataType[] = [],
         public forms: FormType[] = []
     ) {
     }

@@ -3,10 +3,13 @@ import {FormBuilder} from "@/lib";
 import "./index.css";
 import {Form} from "@/lib/form";
 import {Config, FormType} from "@/lib/objects";
+import {clone_object} from "@/lib/utilities.ts";
 import {FC, useEffect, useState} from "react";
+import FormValueEditor from "./input"
 
+let loadcount = 0;
 const BuilderDemo: FC = () => {
-    
+    console.log("****************** BuilderDemo ", loadcount++, "******************");
     // we have the employee payload right here right now
     const employee_data = {
         pagination: {
@@ -40,16 +43,18 @@ const BuilderDemo: FC = () => {
         }
     });
     
-    const config = new Config();
-    config.external_select_options = [
+    const defined_config = new Config();
+    defined_config.external_data = [
         {
             key: "employees",
             label: "Site Employees",
+            display: [""],
             options_func: async () => {
                 console.log("Fetching employees", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 return employee_data.employees.map((item) => {
                         return {
-                            value: item.id, label: `${item.first_name} ${item.last_name}`
+                            value: item.id,
+                            label: `${item.first_name} ${item.last_name}`
                         };
                     }
                 );
@@ -70,12 +75,15 @@ const BuilderDemo: FC = () => {
         {
             key: "sites",
             label: "Company Sites",
+            
             options_func: async () => {
                 console.log("Fetching sites", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 return sites_data.then((payload) => {
                         return payload.list.map((item) => {
                                 return {
-                                    value: item.key, label: item.site
+                                    value: item.key,
+                                    label: item.site,
+                                    
                                 };
                             }
                         );
@@ -84,7 +92,7 @@ const BuilderDemo: FC = () => {
             }
         }
     ];
-    config.forms = [
+    defined_config.forms = [
         {
             id: 4, label: "Test Form", items: [
                 {id: "1", type: "embedded-form", form_id: 7, items: []},
@@ -117,56 +125,65 @@ const BuilderDemo: FC = () => {
         "created_at": null,
         "items": [
             {
-                "id": "wPKMWFQUjJGR3G3mZJvlW",
+                "id": "7TF0pd2cD5ppc7ku9cL4C",
+                "type": "content-html",
+                "label": "",
+                "value": "<p><strong>ddddddd </strong>ss</p><figure class=\"table\" style=\"width:100%;\"><table style=\"background-color:hsl(90, 75%, 60%);border-color:hsl(0, 75%, 60%);border-style:solid;\"><tbody><tr><td>a</td><td>&nbsp;</td><td>d</td></tr><tr><td>&nbsp;</td><td>vg</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>b</td></tr></tbody></table></figure>",
+                "placeholder": ""
+            },
+            {
+                "id": "r-d8EZ7B0dcHyhsAydQkA",
                 "type": "input-checkbox",
                 "label": "",
-                "value": [1,2],
+                "value": [],
                 "source": "employees",
-                "options": [],
-                "placeholder": ""
+                "options": []
             }
         ]
     }
     
     
-    const [view, setView] = useState("builder");
-    const [form, setForm] = useState(form_data_initial ?? config.forms[0]);
-    console.log("BuilderDemo");
+    const [view, setView] = useState("form");
     
-    const [formJSON, setFormJSON] = useState(JSON.stringify(form));
-    //
-    const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const v = event.target.value;
-        console.log("@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%", v);
-        
-        // setFormJSON(v ?? "{}");
-        setFormJSON(v);
-        // setForm(v ? JSON.parse(v) : {});
-    };
+    
+    const [form, setForm] = useState(form_data_initial ?? defined_config.forms[0]);
+    const [config, setConfig] = useState(defined_config);
+    
     const onChange = (value: FormType) => {
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", value);
-        
-        setFormJSON(JSON.stringify(value));
-        // setForm(value);
+        console.log("$$$$$$$$$$$$ BUILDERDEMO $$$$$$$$$$$$$$$$$$", form, value);
+        setForm(value);
     };
-    useEffect(() => {
-        // setForm(formJSON ? JSON.parse(formJSON) : {});
-    }, [formJSON]);
     
-    const panels = {
-        builder: FormBuilder,
-        form: Form,
-    };
-    const PanelComponent = panels[view] ?? panels["builder"];
-    console.log("Panel",PanelComponent)
+    // setTimeout(()=>{
+    //     console.log("3000 BLAMO")
+    //     const new_config = clone_object(config)
+    //     new_config.external_data.push({
+    //         key: "something",
+    //         label: "New Something",
+    //         display: [""],
+    //         options: [
+    //             {value:1,label:"something 1"}
+    //         ]
+    //     })
+    //     // setConfig(new_config)
+    // },3000)
+    
     return (
         <>
             <div id="main">
-                <PanelComponent
+                {view == "builder" && <FormBuilder
                     form={form}
                     onChange={onChange}
                     config={config}
-                />
+                />}
+                
+                {view == "form" && <Form
+                    form={form}
+                    onChange={onChange}
+                    config={config}
+                />}
+                
+                {view == "result" && <div>{JSON.stringify(form)}</div>}
             </div>
            
             
@@ -177,10 +194,7 @@ const BuilderDemo: FC = () => {
                     <button onClick={() => setView("result")}>result</button>
                 </div>
                 
-                <textarea
-                    value={formJSON}
-                    onChange={handleOnChange}
-                ></textarea>
+                <FormValueEditor form={form} onChange={onChange}></FormValueEditor>
             </div>
            
         </>

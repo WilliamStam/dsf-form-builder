@@ -10,6 +10,7 @@ export type ItemConfigType = ItemType & {
     label: string
     value: string[]
     source: string
+    display: string
     options: OptionType[]
 }
 export const itemConfig: ItemConfigType = {
@@ -18,5 +19,6 @@ export const itemConfig: ItemConfigType = {
     label: "",
     value: [],
     source: "local",
+    display: "normal",
     options: [],
 };

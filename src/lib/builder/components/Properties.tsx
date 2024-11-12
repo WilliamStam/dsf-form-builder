@@ -1,7 +1,7 @@
-import items from "@/lib/items";
 import {Settings} from "@/lib/item";
-import {Config, onFormChangeType} from "@/lib/objects";
-import {FormType, ItemType, } from "@/lib/objects";
+import items from "@/lib/items";
+import {FormType, ItemType} from "@/lib/objects";
+import {useFormStore} from "@/lib/stores";
 import {clone_object} from "@/lib/utilities.ts";
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {Button} from "primereact/button";
@@ -9,52 +9,50 @@ import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
 
 export default function Properties({...props}: {
-    form: FormType,
-    onFormChange: onFormChangeType,
     activeItem?: ItemType,
     setActiveItem: (item: ItemType | undefined) => void,
-    config: Config
     
 }) {
+    const {form, setForm} = useFormStore();
+    // const {config, setConfig} = useConfigStore();
+    
     console.log("Properties");
-    const [editing_form, setEditingForm] = useState(props.form);
     const [editing_item, setEditingItem] = useState(props.activeItem);
     
     const handleFormItemChange = (value: ItemType) => {
-        console.log("Properties","handleFormItemChange", value);
+        console.log("Properties", "handleFormItemChange", value);
         //
         setEditingItem(value);
         // //
-        const new_form = clone_object(editing_form);
+        const new_form = clone_object(form);
         new_form.items = new_form.items.map((it) => {
             if (it.id == value.id) {
                 return value;
             }
             return it;
         });
-        props.onFormChange(new_form);
+        setForm(new_form);
     };
     const handleOnFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedData: FormType = {...editing_form, [event.target.name]: event.target.value};
-        setEditingForm(updatedData);
-        props.onFormChange(updatedData);
+        const updatedData: FormType = {...form, [event.target.name]: event.target.value};
+        setForm(updatedData);
     };
     
     const handleCancel = () => {
         props.setActiveItem(undefined);
     };
     
-    console.log("Properties","activeItem", editing_item);
+    console.log("Properties", "activeItem", editing_item);
     
     useEffect(() => {
-        console.log("useEffect","setEditingItem", props.activeItem)
+        console.log("useEffect", "setEditingItem", props.activeItem);
         setEditingItem(props.activeItem);
     }, [props.activeItem]);
     
-    useEffect(() => {
-        console.log("useEffect", "setEditingForm", props.form)
-        setEditingForm(props.form);
-    }, [props.form]);
+    // useEffect(() => {
+    //     console.log("useEffect", "setEditingForm", form)
+    //     setEditingForm(form);
+    // }, [props.form]);
     
     
     // useEffect(() => {
@@ -69,13 +67,11 @@ export default function Properties({...props}: {
     // }, [item]);
     
     
-    
-    
     if (editing_item) {
         const item = items.getByItem(editing_item);
         
-        if (item){
-            const IconComponent = item.icon
+        if (item) {
+            const IconComponent = item.icon;
             return (
                 <>
                     <div className="properties active">
@@ -94,9 +90,9 @@ export default function Properties({...props}: {
                          <Button onClick={handleCancel} size="small" outlined={true} icon="pi pi-times"/>
                     </div>
                     
-                    <Settings item={editing_item} onChange={handleFormItemChange} form={editing_form} config={props.config}></Settings>
-                    
-                    {/* <Button onClick={handleCancel} size="small" className={"w-full"}>Done</Button> */}
+                    <Settings item={editing_item} onChange={handleFormItemChange}/>
+                        
+                        {/* <Button onClick={handleCancel} size="small" className={"w-full"}>Done</Button> */}
                     </div>
                 </>
             );
@@ -122,7 +118,7 @@ export default function Properties({...props}: {
                                     <InputText
                                         onChange={handleOnFormChange}
                                         name={"label"}
-                                        value={editing_form.label ?? ""}
+                                        value={form.label ?? ""}
                                         className={"w-full"}
                                     />
                                 </div>
@@ -131,7 +127,8 @@ export default function Properties({...props}: {
                     </Accordion>
                 </div>
             </>
-        ); }
-                
-                
-                }
+        );
+    }
+    
+    
+}

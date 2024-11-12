@@ -1,5 +1,8 @@
-import {Config, FormType, ItemType, onFormChangeType} from "@/lib/objects";
 import {Item} from "@/lib/item";
+
+import {itemConfig as FormItemConfig} from "@/lib/items/special/form/config";
+import {FormType, ItemType} from "@/lib/objects";
+import {useFormStore} from "@/lib/stores";
 import {clone_object} from "@/lib/utilities.ts";
 import {useDroppable} from "@dnd-kit/core";
 import {useSortable} from "@dnd-kit/sortable";
@@ -10,18 +13,14 @@ import {ButtonGroup} from "primereact/buttongroup";
 import {confirmDialog} from "primereact/confirmdialog";
 import {useEffect, useState} from "react";
 
-import {itemConfig as FormItemConfig} from "@/lib/items/special/form/config";
 
-
-export function SortableItem({id, item, active, setActive, onItemChange, onItemRemove, config, form}: {
+export function SortableItem({id, item, active, setActive, onItemChange, onItemRemove}: {
     id: string,
     item: ItemType,
     active?: ItemType,
     setActive: (item: ItemType | undefined) => void,
     onItemChange: (item: ItemType) => void
     onItemRemove: (id: string) => void
-    config: Config
-    form: FormType
 }) {
     
     const {attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition} =
@@ -44,7 +43,7 @@ export function SortableItem({id, item, active, setActive, onItemChange, onItemR
         className = className + " active";
     }
     
-    const mask_block:boolean = [FormItemConfig.type].includes(item.type)
+    const mask_block: boolean = [FormItemConfig.type].includes(item.type);
     
     const confirm = () => {
         confirmDialog({
@@ -64,11 +63,9 @@ export function SortableItem({id, item, active, setActive, onItemChange, onItemR
         <>
             <div ref={setNodeRef} style={style} {...attributes} className={className}>
                 
-                <Item item={item} onChange={onItemChange} config={config} form={form}/>
-                {}
-                {mask_block ? (
-                    <div className="mask"></div>
-                ): null}
+                <Item item={item} onChange={onItemChange}/> {} {mask_block ? (
+                <div className="mask"></div>
+            ) : null}
                 
                 
                 <div className="flex flex-row align-items-center item-footer">
@@ -94,22 +91,20 @@ export function SortableItem({id, item, active, setActive, onItemChange, onItemR
     );
 }
 
-export default function Canvas({form, onFormChange, activeItem, setActiveItem, config}: {
-    form: FormType,
-    onFormChange: onFormChangeType,
+let loadcount = 0;
+export default function Canvas({activeItem, setActiveItem}: {
     activeItem?: ItemType,
     setActiveItem: (item: ItemType | undefined) => void,
-    config: Config
 }) {
-    console.log("Canvas", form);
-    const [items, setItems] = useState<ItemType[]>(form?.items ?? []);
+    console.log("    ************** Canvas", loadcount++, "**************");
+    const {form, setForm} = useFormStore();
+    const [items, setItems] = useState<ItemType[]>(form.items ?? []);
     
-    useEffect(() => {
-        if (form && form.items && form.items != items) {
-            console.log("useEffect","setItems", "form", form, form.items, items);
-            setItems(form.items ?? []);
-        }
-    }, [form]);
+    
+    useEffect(() => useFormStore.subscribe((state) => {
+        setItems(clone_object(state.form.items));
+        console.log("Canvas useFormStore useEffect form change");
+    }));
     
     
     const handleItemRemove = (item_id: string) => {
@@ -118,7 +113,8 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem, c
         new_form.items = new_form.items.filter(it =>
             it.id != item_id
         );
-        onFormChange(new_form);
+        setForm(new_form);
+        setItems(new_form.items);
         if (activeItem && activeItem.id == item_id) {
             setActiveItem(undefined);
         }
@@ -126,17 +122,17 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem, c
     
     const handleItemChange = (value: ItemType) => {
         console.log("handleItemChange", value);
-        const new_items: ItemType[] = items.map((item: ItemType) => {
+        const new_form = clone_object<FormType>(form);
+        
+        new_form.items = items.map((item: ItemType) => {
             if (item.id == value.id) {
                 return value;
             }
             return item;
         });
-        setItems(new_items);
+        setForm(new_form);
+        setItems(new_form.items);
         
-        const new_form = clone_object<FormType>(form);
-        new_form.items = new_items;
-        onFormChange(new_form);
     };
     
     // @ts-ignore
@@ -167,8 +163,6 @@ export default function Canvas({form, onFormChange, activeItem, setActiveItem, c
                         setActive={setActiveItem}
                         onItemChange={handleItemChange}
                         onItemRemove={handleItemRemove}
-                        config={config}
-                        form={form}
                     />
                 ))}
         </div>

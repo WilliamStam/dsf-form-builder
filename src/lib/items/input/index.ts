@@ -9,9 +9,9 @@ import RadioItem from "./radio"
 
 const items = new ItemRegistry(new Group({label: "Inputs"}));
 // items.registerItem(DateItem)
+items.registerItem(TextItem)
 items.registerItem(NumberItem)
 items.registerItem(SelectItem)
-items.registerItem(TextItem)
 items.registerItem(CheckboxItem)
 items.registerItem(RadioItem)
 

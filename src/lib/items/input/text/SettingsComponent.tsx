@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
 
-const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, config}) => {
+const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     console.log("SettingsComponent", item);
     
@@ -13,12 +13,12 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, confi
         const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
         setData(updatedData);
         onChange(updatedData);
-        console.log("SettingsComponent","handleOnChange", updatedData);
+        console.log("SettingsComponent", "handleOnChange", updatedData);
     };
     
     
     useEffect(() => {
-        console.log("SettingsComponent","useEffect", item);
+        console.log("SettingsComponent", "useEffect", item);
         setData({...itemConfig, ...item});
     }, [item]);
     console.log("SettingsComponent", data);
@@ -60,5 +60,5 @@ export default SettingsComponent;
 
 export const SettingsValidation = (item: ItemConfigType) => {
     console.log("Validation", item);
-    return {}
+    return {};
 };

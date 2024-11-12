@@ -1,4 +1,5 @@
 import {FieldComponentProps} from "@/lib/objects";
+import {useConfigStore} from "@/lib/stores";
 import {clone_object} from "@/lib/utilities.ts";
 
 import {
@@ -69,9 +70,7 @@ const SettingsEditOptionItem = ({option, onChange, index}: {
                     style={{width: "1rem", color: "#E1E1E1", background: "transparent"}}
                     severity="secondary"
                     size="small"
-                    ref={setActivatorNodeRef as (element: Button | null) => void}
-                    {...listeners}
-                />
+                    ref={setActivatorNodeRef as (element: Button | null) => void}{...listeners}/>
                 
                 <div className="p-inputgroup flex-1">
                     
@@ -152,7 +151,7 @@ const SettingsAddOptionItem = ({onInsert}: {
     );
 };
 
-const CustomSelectOptions: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, form, config}) => {
+const CustomSelectOptions: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
     const handleOptionsOnChange = (option: OptionType | null, index: number) => {
@@ -233,10 +232,11 @@ const CustomSelectOptions: React.FC<FieldComponentProps<ItemConfigType>> = ({ite
 };
 
 
-const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, form, config}) => {
+const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>| RadioButtonChangeEvent) => {
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement> | RadioButtonChangeEvent) => {
         const updatedData: ItemConfigType = {...data, [event.target.name]: event.target.value};
         setData(updatedData);
         onChange(updatedData);
@@ -270,7 +270,7 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, form,
                     </div>
                 </AccordionTab>
                 <AccordionTab header="Options" key="options">
-                    {config.external_select_options.map((option) => {
+                    {config.external_data.map((option) => {
                         return (
                             <div key={option.key} className="flex align-items-center">
                                 <RadioButton
@@ -297,7 +297,8 @@ const SettingsComponent: React.FC<FieldComponentProps> = ({item, onChange, form,
                     
                    
                     <div className="mt-4">
-                    {data.source === "local" && <CustomSelectOptions item={data} onChange={onChange} config={config} form={form}/>}
+                    {data.source === "local" &&
+                        <CustomSelectOptions item={data} onChange={onChange}/>}
                     </div>
                 </AccordionTab>
                 

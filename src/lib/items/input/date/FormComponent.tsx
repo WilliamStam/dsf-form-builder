@@ -1,12 +1,15 @@
 // @ts-nocheck
 import {FieldComponentProps} from "@/lib/objects";
+import {useConfigStore, useFormStore} from "@/lib/stores";
 import {Calendar} from "primereact/calendar";
 import {FormEvent} from "primereact/ts-helpers";
 import React, {useEffect, useState} from "react";
 import {ItemConfigType, itemConfig} from "./config.ts";
 
 
-const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    const {form} = useFormStore();
+    const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setItem({...itemConfig, ...item});

@@ -2,7 +2,7 @@ import {FieldComponentProps} from "@/lib/objects";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
-const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setData({...itemConfig, ...item});

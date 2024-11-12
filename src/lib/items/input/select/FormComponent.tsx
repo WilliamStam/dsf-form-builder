@@ -1,11 +1,13 @@
-import {ConfigExternalSelectData, FieldComponentProps} from "@/lib/objects";
+import {ConfigExternalDataType, FieldComponentProps} from "@/lib/objects";
+import {useConfigStore} from "@/lib/stores";
 import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType, SelectOptionType} from "./config.ts";
 
-const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
-    const [options, setOptions] = useState<SelectOptionType[]>(data.options)
+    const [options, setOptions] = useState<SelectOptionType[]>(data.options);
     
     useEffect(() => {
         setData({...itemConfig, ...item});
@@ -14,17 +16,17 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     useEffect(() => {
         setOptions(data.options);
         if (data.source != "local") {
-            console.log("CONFIG", config, data.source)
-            const external: ConfigExternalSelectData | undefined = config.external_select_options.find((item) => item.key == data.source)
+            console.log("CONFIG", config, data.source);
+            const external: ConfigExternalDataType | undefined = config.external_data.find((item) => item.key == data.source);
             if (external) {
                 if (external.options) {
-                    setOptions(external.options)
+                    setOptions(external.options);
                 }
                 if (external.options_func) {
                     external.options_func().then((y: SelectOptionType[]) => {
-                        console.log("yyyyyyyyyyyy", y)
-                        setOptions(y)
-                    })
+                        console.log("yyyyyyyyyyyy", y);
+                        setOptions(y);
+                    });
                     
                     // options = await external.options_func() ?? []
                 }
@@ -37,7 +39,6 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
         const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
         onChange(updatedData);
     };
-    
     
     
     const id = Math.random().toString(36).substring(2, 15);
@@ -63,6 +64,6 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
 };
 export const FormValidation = (item: ItemConfigType) => {
     console.log("Validation", item);
-    return {}
+    return {};
 };
 export default FormComponent;

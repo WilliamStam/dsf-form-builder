@@ -1,8 +1,10 @@
 import {Config, ItemType} from "@/lib/objects";
-import {formState, FormType} from "@/lib/objects/forms.ts";
+import { FormType} from "@/lib/objects/forms.ts";
 
 import {Item} from "@/lib/item"
-import {useEffect} from "react";
+import {useConfigStore, useFormStore} from "@/lib/stores";
+import {clone_object} from "@/lib/utilities.ts";
+import {useEffect, useState} from "react";
 import "@/lib/styles/styles.scss";
 // import style from "./style.css";
 
@@ -12,30 +14,41 @@ export const Form = ({...props}: {
     onChange: (value: FormType) => void,
     config: Config
 }) => {
-    const {form, setForm} = formState(props.form);
+    const {form, setForm} = useFormStore();
+    const setConfig = useConfigStore((state) => state.setConfig);
+    const [items, setItems] = useState<ItemType[]>(form.items);
+    
     useEffect(() => {
-        if (props.form) {
-            console.log("useEffect", "props.form", props.form);
-            setForm(props.form);
-        }
+        console.log("form useEffect form change")
+        setForm(props.form);
+        setItems(props.form.items);
     }, [props.form]);
-    //
+    
     useEffect(() => {
-        if (form) {
-            console.log("useEffect", "form", form);
-            props.onChange(form);
-        }
-    }, [form]);
+        setConfig(props.config);
+    }, [props.config]);
+    // console.log(form)
+    
+    useEffect(() => useFormStore.subscribe((state) => {
+        props.onChange(clone_object(state.form));
+        setItems(state.form.items);
+        console.log("Form useFormStore useEffect form change")
+    }));
+    
+    
+    
     
     const handleItemChange = (value: ItemType) => {
         console.log("handleItemChange", value);
-        form.items = form.items.map((item: ItemType) => {
+        const new_form = clone_object<FormType>(form);
+        new_form.items = form.items.map((item: ItemType) => {
             if (item.id == value.id) {
                 return value;
             }
             return item;
         });
-        setForm(form)
+        setItems(new_form.items);
+        setForm(new_form)
     };
     
     if (form && form.id) {
@@ -43,13 +56,12 @@ export const Form = ({...props}: {
             <>
                 <div className="form-area">
                     <h1>{form.label}</h1>
-                    {form.items?.map((item) => (
+                    {JSON.stringify(items)}
+                    {items.map((item) => (
                         <Item
                             key={item.id}
                             item={item}
                             onChange={handleItemChange}
-                            form={form}
-                            config={props.config}
                         />
                     ))}
                 </div>

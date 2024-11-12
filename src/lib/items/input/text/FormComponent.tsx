@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
 
-const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, config}) => {
+const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setData({...itemConfig, ...item});
@@ -40,6 +40,6 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
 };
 export const FormValidation = (item: ItemConfigType) => {
     console.log("Validation", item);
-    return {}
+    return {};
 };
 export default FormComponent;

@@ -1,4 +1,5 @@
 import {FieldComponentProps, FormType} from "@/lib/objects";
+import {useConfigStore, useFormStore} from "@/lib/stores";
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
 import {InputText} from "primereact/inputtext";
@@ -9,7 +10,9 @@ import {itemConfig, ItemConfigType} from "./config.ts";
 
 
 
-const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange, form, config}) => {
+const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    const {form} = useFormStore();
+    const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement> | DropdownChangeEvent) => {

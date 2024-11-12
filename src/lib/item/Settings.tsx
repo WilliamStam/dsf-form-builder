@@ -1,21 +1,16 @@
 import items from "@/lib/items";
-import {Config, ItemType} from "@/lib/objects";
-import {FormType} from "@/lib/objects";
+import {ItemType} from "@/lib/objects";
 import React from "react";
 
-export const Settings = ({item, onChange, form, config}: {
+export const Settings = ({item, onChange}: {
     item: ItemType,
     onChange: (item: ItemType) => void,
-    form: FormType,
-    config: Config
 }) => {
     const item_object = items.getByItem(item);
     if (item && item_object) {
         return React.createElement(item_object.settings.render, {
             item: item,
-            onChange: onChange,
-            form:form,
-            config:config
+            onChange: onChange
         });
     }
     // component doesn't exist yet
