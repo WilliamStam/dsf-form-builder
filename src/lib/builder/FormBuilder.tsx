@@ -10,7 +10,7 @@ import {clone_object} from "@/lib/utilities.ts";
 import {rectSwappingStrategy, SortableContext,} from "@dnd-kit/sortable";
 import {diff} from "deep-object-diff";
 import {ConfirmDialog} from "primereact/confirmdialog";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import "@/lib/styles/styles.scss";
 
 // import style from "./style.css";
@@ -45,12 +45,14 @@ export const Builder = ({...props}: {
     const {config, setConfig} = useConfigStore();
     
     useEffect(() => {
-        console.log(props.form);
         setForm(props.form);
+        console.log(form)
     }, [props.form]);
     
     useEffect(() => {
+       
         setConfig(props.config);
+        console.log(config)
     }, [props.config]);
     
     getFormStore().subscribe((state) => {

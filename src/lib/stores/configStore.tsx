@@ -1,4 +1,4 @@
-import {ItemConfigType, OptionType} from "@/lib/items/input/checkbox/config.ts";
+import {OptionType} from "@/lib/items/input/checkbox/config.ts";
 import {ConfigExternalDataResponseType, ConfigExternalDataType, ConfigType} from "@/lib/objects";
 import {empty_config} from "@/lib/objects/config.ts";
 import {createZustandContext} from "@/lib/objects/store.tsx";
@@ -25,23 +25,26 @@ export const ConfigStoreContext = createZustandContext<ConfigType, StoreApi<Conf
                     set(() => ({config: value}));
                 }
             },
-            getExternalDataOptions: (source:string) : ConfigExternalDataResponseType[] => {
+            getExternalDataOptions: (source: string): ConfigExternalDataResponseType[] => {
                 
-                const external: ConfigExternalDataType | undefined = get().config.external_data.find((item) => item.key == source);
-                console.log("external", external, source, config.external_data)
+                const external: ConfigExternalDataType | undefined = get()
+                    .config
+                    .external_data
+                    .find((item) => item.key == source);
+                console.log("external", external, source, config.external_data);
                 if (external) {
                     if (external.options) {
-                        console.log("external.options")
+                        console.log("external.options");
                         return external.options;
                     }
                     if (external.options_func) {
-                        console.log("external.options_func")
+                        console.log("external.options_func");
                         external.options_func().then((y: OptionType[]) => {
                             return y;
                         });
                     }
                 }
-                return []
+                return [];
             }
         }));
     },

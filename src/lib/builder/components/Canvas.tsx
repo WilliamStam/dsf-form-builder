@@ -11,7 +11,6 @@ import {Button} from "primereact/button";
 import {ButtonGroup} from "primereact/buttongroup";
 
 import {confirmDialog} from "primereact/confirmdialog";
-import {useEffect, useState} from "react";
 
 
 export function SortableItem({id, item, active, setActive, onItemChange, onItemRemove}: {
@@ -98,7 +97,6 @@ export default function Canvas({activeItem, setActiveItem}: {
 }) {
     console.log("    ************** Canvas", loadcount++, "**************");
     const {form, setForm} = useFormStore();
-    
     
     
     const handleItemRemove = (item_id: string) => {

@@ -5,7 +5,7 @@ import {ConfigStoreContext, FormStoreContext, useConfigStore, useFormStore} from
 import {getFormStore} from "@/lib/stores/formStore.tsx";
 import {clone_object} from "@/lib/utilities.ts";
 import {diff} from "deep-object-diff";
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import "@/lib/styles/styles.scss";
 // import style from "./style.css";
 
