@@ -28,7 +28,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     
     return (
         <>
-            <article>
+            <article className={`${item.type}-area`}>
                  <Calendar// value={date} // viewDate={date}
                      onChange={(e) => {
                          // setDate(e.value);

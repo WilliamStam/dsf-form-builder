@@ -4,6 +4,7 @@ import {clone_object} from "@/lib/utilities.ts";
 import {Checkbox, CheckboxChangeEvent} from "primereact/checkbox";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType, OptionType} from "./config.ts";
+import "./style.scss";
 
 const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
     const {config} = useConfigStore();
@@ -55,7 +56,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     const id = Math.random().toString(36).substring(2, 15);
     return (
         <>
-            <article>
+            <article className={`${item.type}-area`}>
                 <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
                     {options.map((option) => {

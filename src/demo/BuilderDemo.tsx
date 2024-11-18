@@ -124,6 +124,7 @@ const BuilderDemo: FC = () => {
         "label": "Test Form",
         "created_at": null,
         "items": [
+            {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
             {
                 "id": "7TF0pd2cD5ppc7ku9cL4C",
                 "type": "content-html",
@@ -138,7 +139,8 @@ const BuilderDemo: FC = () => {
                 "value": [],
                 "source": "employees",
                 "options": []
-            }
+            },
+            // {id: "1", type: "embedded-form", form_id: 8, items: []},
         ]
     }
     

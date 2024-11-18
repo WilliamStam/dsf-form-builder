@@ -52,7 +52,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     
     return (
         <>
-            <article>
+            <article className={`${item.type}-area`}>
                 <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
                 <div>

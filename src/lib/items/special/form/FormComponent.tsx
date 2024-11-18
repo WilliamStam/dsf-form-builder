@@ -47,15 +47,15 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     if (childForm) {
         return (
             <>
-                <article>
+                <article className={`${item.type}-area`}>
                     <div className="flex flex-column gap-2">
-                <label>{data.label}</label>
-                        <Form
-                            onChange={fomrOnChange}
-                            form={childForm}
-                            config={config}
-                        />
-            </div>
+                    <label>{data.label}</label>
+                    <Form
+                        onChange={fomrOnChange}
+                        form={childForm}
+                        config={config}
+                    />
+                    </div>
                 </article>
            
             

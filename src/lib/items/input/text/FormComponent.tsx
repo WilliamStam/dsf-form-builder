@@ -1,4 +1,5 @@
 import {FieldComponentProps} from "@/lib/objects";
+import {clone_object} from "@/lib/utilities.ts";
 import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
@@ -13,8 +14,8 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
-        onChange(updatedData);
-        // setData(updatedData);
+        onChange(clone_object(updatedData));
+        setData(updatedData);
     };
     
     
@@ -22,7 +23,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     
     return (
         <>
-            <article>
+            <article className={`${item.type}-area`}>
                 <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
                 <InputText
