@@ -41,7 +41,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     const id = Math.random().toString(36).substring(2, 15);
     return (
         <>
-            <article className={`${data.type}-area`}>
+            <article className={`${data.type}-area ${data.display}`}>
                 <div className="flex flex-column gap-2">
                 <label htmlFor={id}>{data.label}</label>
                     {options && options.map((option) => {

@@ -10,7 +10,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     console.log("   ***************", item.type, item.id, loadcount++, "***************");
     const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
-    const [childForm, setChildForm] = useState<FormType | undefined>();
+    const [childForm, setChildForm] = useState<FormType | undefined>(config.forms.find((it: FormType) => it.id === data.form_id));
     
     
     // if (data.form_id && data.form_id != childForm?.id) {
@@ -20,10 +20,11 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     //
     useEffect(() => {
         setData({...itemConfig, ...item});
-        
+        console.log("upddddddddddddddddddddddddd", data.form_id, childForm?.id )
         if (data.form_id && data.form_id != childForm?.id) {
             setChildForm(config.forms.find((it: FormType) => it.id === data.form_id));
         }
+        
     }, [item]);
     
     //
@@ -51,6 +52,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
                 <article className={`${item.type}-area`}>
                     <div className="flex flex-column gap-2">
                     <label>{data.label}</label>
+                        {JSON.stringify(childForm)}
                     <Form
                         onChange={formOnChange}
                         form={childForm}

@@ -4,6 +4,7 @@ import { JSX as JSX_2 } from 'react/jsx-runtime';
 declare type ConfigExternalDataResponseType = {
     value: any;
     label: string;
+    image?: string;
 };
 
 declare type ConfigExternalDataType = {

@@ -22,7 +22,7 @@ export const ConfigStoreContext = createZustandContext<ConfigType, StoreApi<Conf
             setConfig: (value: ConfigType) => {
                 console.log("ConfigStoreContext setConfig", diff(get().config, value));
                 if (is_different(get().config, value)) {
-                    set(() => ({config: value}));
+                    set(() => ({config: {...empty_config, ...value}}));
                 }
             },
             getExternalDataOptions: (source: string): ConfigExternalDataResponseType[] => {

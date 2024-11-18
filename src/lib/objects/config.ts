@@ -3,6 +3,7 @@ import {FormType} from "@/lib";
 export type ConfigExternalDataResponseType = {
     value: any;
     label: string;
+    image?: string;
 }
 export type ConfigExternalDataType = {
     key: string;

@@ -32,7 +32,6 @@ const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item,
         return {value: item.id, label: item.label}
     }).filter(item => item.value != form.id)
     
-    
     return (
         <>
             <Accordion activeIndex={0}>

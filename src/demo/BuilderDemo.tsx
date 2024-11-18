@@ -92,31 +92,31 @@ const BuilderDemo: FC = () => {
                 }
             }
         ],
-        forms: [
-            {
-                id: 4, label: "Test Form", items: [
-                    {id: "1", type: "embedded-form", form_id: 7, items: []},
-                    {id: "2", type: "input-select", source: "employees"}
-                ]
-            },
-            {
-                id: 7, label: "hammer", items: [
-                    {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
-                    {id: "1", type: "embedded-form", form_id: 8, items: []},
-                    {id: "2", type: "input-select", source: "sites", label: "where will these be used?"},
-                
-                ]
-            },
-            {
-                id: 8, label: "screwdriver", items: [
-                    {id: "1", type: "input-text", value: "", label: "Did it buy the screw dinner first?"},
-                    {id: "2", type: "input-text", value: "something", label: "got lazy"}
-                ]
-            },
-            {
-                id: 9, label: "plaster", items: []
-            },
-        ]
+        // forms: [
+        //     {
+        //         id: 4, label: "Test Form", items: [
+        //             {id: "1", type: "embedded-form", form_id: 7, items: []},
+        //             {id: "2", type: "input-select", source: "employees"}
+        //         ]
+        //     },
+        //     {
+        //         id: 7, label: "hammer", items: [
+        //             {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
+        //             {id: "1", type: "embedded-form", form_id: 8, items: []},
+        //             {id: "2", type: "input-select", source: "sites", label: "where will these be used?"},
+        //
+        //         ]
+        //     },
+        //     {
+        //         id: 8, label: "screwdriver", items: [
+        //             {id: "1", type: "input-text", value: "", label: "Did it buy the screw dinner first?"},
+        //             {id: "2", type: "input-text", value: "something", label: "got lazy"}
+        //         ]
+        //     },
+        //     {
+        //         id: 9, label: "plaster", items: []
+        //     },
+        // ]
     };
     
     
@@ -125,7 +125,7 @@ const BuilderDemo: FC = () => {
         "label": "Test Form",
         "created_at": null,
         "items": [
-            {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
+            // {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
             {
                 "id": "7TF0pd2cD5ppc7ku9cL4C",
                 "type": "content-html",
@@ -134,11 +134,20 @@ const BuilderDemo: FC = () => {
                 "placeholder": ""
             },
             {
-                "id": "r-d8EZ7B0dcHyhsAydQkA",
+                "id": "d8EZ7B0dcHyhsAydQkA",
                 "type": "input-checkbox",
                 "label": "",
                 "value": [],
                 "source": "employees",
+                "options": []
+            },
+            {
+                "id": "r-d8EZ7B0dcHA",
+                "type": "input-checkbox",
+                "label": "",
+                "value": [],
+                "source": "employees",
+                "display": "button-block",
                 "options": []
             },
             // {id: "1", type: "embedded-form", form_id: 8, items: []},
@@ -146,7 +155,7 @@ const BuilderDemo: FC = () => {
     }
     
     
-    const [view, setView] = useState("builder");
+    const [view, setView] = useState("form");
     
     
     const [form, setForm] = useState<FormType>(form_data_initial ?? defined_config.forms[0]);

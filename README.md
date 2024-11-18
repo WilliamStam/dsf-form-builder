@@ -29,6 +29,33 @@ import {FormBuilder} from "dsf-form-builder";
 import "dsf-form-builder/dist/style.css"
 import "./style.scss"
 export default function App() {
+    const config: ConfigType = {
+        external_data: [
+              {
+                key: "something",
+                label: "somethings label",
+                options_func: async () => {
+                    console.log("XXXXXXXXX Fetching employees", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    return [
+                        {id: 1, label: "a",},
+                        {id: 2, label: "c",},
+                        {id: 3, label: "e",}
+                    ];
+                },
+            },
+           
+        ],
+        forms: [
+            {
+                id: 4, label: "Test Form", items: [
+                    {id: "1", type: "embedded-form", form_id: 7, items: []},
+                    {id: "2", type: "input-select", source: "employees"}
+                ]
+            },
+           
+        ]
+    };
+    
     const [form, setForm] = useState({
         "id": 4,
         "label": "Demo form",
@@ -88,14 +115,14 @@ export default function App() {
     return (
         <>
             <div id="builder">
-                <FormBuilder form={form} onChange={onChange}/>
+                <FormBuilder
+                    form={form}
+                    onChange={onChange}
+                    config={config}
+                />
             </div>
             <div id="output">
-                <textarea
-                    style={{height: "100%", width: "100%"}}
-                    value={formJSON}
-                    onChange={handleOnChange}
-                ></textarea>
+                {JSON.stringify(form)}
             </div>
         </>
     )
