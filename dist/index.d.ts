@@ -1,12 +1,6 @@
 import { default as default_2 } from 'react';
 import { JSX as JSX_2 } from 'react/jsx-runtime';
 
-declare class Config {
-    external_data: ConfigExternalDataType[];
-    forms: FormType[];
-    constructor(external_data?: ConfigExternalDataType[], forms?: FormType[]);
-}
-
 declare type ConfigExternalDataResponseType = {
     value: any;
     label: string;
@@ -19,6 +13,11 @@ declare type ConfigExternalDataType = {
     options_func?: () => Promise<ConfigExternalDataResponseType[]>;
 };
 
+export declare type ConfigType = {
+    external_data: ConfigExternalDataType[];
+    forms: FormType[];
+};
+
 declare interface FieldComponentProps<T> {
     item: T;
     onChange: (value: ItemType) => void;
@@ -27,13 +26,13 @@ declare interface FieldComponentProps<T> {
 export declare const Form: ({ ...props }: {
     form: FormType;
     onChange: (value: FormType) => void;
-    config: Config;
+    config: ConfigType;
 }) => JSX_2.Element;
 
 export declare const FormBuilder: ({ ...props }: {
     form: FormType;
-    onChange: (form: FormType) => void;
-    config: Config;
+    onChange: (value: FormType) => void;
+    config: ConfigType;
 }) => JSX_2.Element;
 
 export declare type FormType = {
