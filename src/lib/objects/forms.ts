@@ -1,4 +1,6 @@
 import items from "@/lib/items";
+import {is_different} from "@/lib/utilities.ts";
+import {diff} from "deep-object-diff";
 import {ItemType} from "./items.ts";
 
 export type FormType = {
@@ -20,8 +22,8 @@ export const empty_form = {
 export const fixFormItems = (value: FormType): FormType => {
     value.items.map((item: ItemType) => {
         let real_item = items.getByItem(item);
-        if (real_item) {
-            console.log("fixing item", item, real_item.data, {...real_item.data, ...item});
+        if (real_item && is_different(real_item.data, item)) {
+            console.log("fixing item", diff(item, real_item.data));
             return {...real_item.data, ...item};
         }
         return item;

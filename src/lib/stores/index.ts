@@ -1,2 +1,2 @@
-export {useConfigStore} from "./configStore.ts"
+export {useConfigStore, ConfigStoreContext} from "./configStore.tsx"
 export {useFormStore, FormStoreContext} from "./formStore.tsx"

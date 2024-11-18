@@ -6,8 +6,9 @@ import {FormEvent} from "primereact/ts-helpers";
 import React, {useEffect, useState} from "react";
 import {ItemConfigType, itemConfig} from "./config.ts";
 
-
+let loadcount = 0
 const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    console.log("           ***************", item.type, item.id, loadcount++, "***************");
     const {form} = useFormStore();
     const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
@@ -18,7 +19,8 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     const handleOnChange = (event: FormEvent<(Date | null)[]>) => {
         const updatedData: DateInputConfig = {...{...itemConfig, ...item}, value: event.value};
         onChange(updatedData);
-        setItem(updatedData);
+        
+        setData(updatedData);
         // console.log(event.value as Date);
         
     };

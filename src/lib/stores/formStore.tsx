@@ -1,65 +1,42 @@
 import {FormType} from "@/lib/objects";
 import {empty_form, fixFormItems} from "@/lib/objects/forms.ts";
+import {createZustandContext} from "@/lib/objects/store.tsx";
 import {is_different} from "@/lib/utilities.ts";
-import {createZustandContext} from "@/lib/objects/store.tsx"
-// import React from "react";
-// import {create} from 'zustand'
-
-//
-// interface FormState {
-//     form: FormType;
-//     setForm: (form: FormType) => void;
-// }
-//
-// export const useFormStore = create<FormState>()((set, get) => ({
-//     form: empty_form,
-//     setForm: (value: FormType) => {
-//         console.log("useFormStore setForm", get().form,value);
-//         if (is_different(get().form,value)) {
-//             set(() => ({form: fixFormItems(value)}))
-//         }
-//     },
-// }))
-//
-// export default useFormStore;
-
-// ---------------------------------------------------------------------------
-import React from "react";
-import {createStore, StoreApi, useStore, create} from "zustand";
-// -----------------------
+import {diff} from "deep-object-diff";
+import {create, StoreApi, useStore} from "zustand";
 
 interface FormState {
     form: FormType;
     setForm: (form: FormType) => void;
 }
+
 export const FormStoreContext = createZustandContext<FormType, StoreApi<FormState>>(
     (initialValue: FormType) => {
-        let form = {...empty_form, ...initialValue};
+        let form = fixFormItems({...empty_form, ...initialValue});
         return create<FormState>()((set, get) => ({
             form: form,
             setForm: (value: FormType) => {
-                console.log("useFormStore setForm", get().form, value, is_different(get().form, value));
+                console.log("useFormStore setForm", diff(get().form, value));
                 if (is_different(get().form, value)) {
-                    set(() => ({form: fixFormItems(value)}))
+                    set(() => ({form: fixFormItems(value)}));
                 }
             },
         }));
     },
 );
 export const getFormStore = () => {
-    const store = FormStoreContext.useContext()
+    const store = FormStoreContext.useContext();
     console.log("useFormStore", store);
     if (!store) {
-        throw new Error('Missing FormStoreContext')
+        throw new Error("Missing FormStoreContext");
     }
-    return store
-}
+    return store;
+};
 
-export const useFormStore = () => useStore(getFormStore())
+export const useFormStore = () => useStore(getFormStore());
 
 
-
-export default useFormStore
+export default useFormStore;
 
 //
 // const App = () => {

@@ -3,8 +3,9 @@ import {InputText} from "primereact/inputtext";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType} from "./config.ts";
 
-
+let loadcount = 0
 const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    console.log("           ***************", item.type, item.id, loadcount++, "***************");
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     useEffect(() => {
         setData({...itemConfig, ...item});
@@ -13,6 +14,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
         onChange(updatedData);
+        setData(updatedData);
     };
     
     const id = Math.random().toString(36).substring(2, 15);

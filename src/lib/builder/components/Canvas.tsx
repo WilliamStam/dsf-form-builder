@@ -98,13 +98,7 @@ export default function Canvas({activeItem, setActiveItem}: {
 }) {
     console.log("    ************** Canvas", loadcount++, "**************");
     const {form, setForm} = useFormStore();
-    const [items, setItems] = useState<ItemType[]>(form.items ?? []);
     
-    
-    useEffect(() => useFormStore.subscribe((state) => {
-        setItems(clone_object(state.form.items));
-        console.log("Canvas useFormStore useEffect form change");
-    }));
     
     
     const handleItemRemove = (item_id: string) => {
@@ -114,7 +108,6 @@ export default function Canvas({activeItem, setActiveItem}: {
             it.id != item_id
         );
         setForm(new_form);
-        setItems(new_form.items);
         if (activeItem && activeItem.id == item_id) {
             setActiveItem(undefined);
         }
@@ -124,14 +117,13 @@ export default function Canvas({activeItem, setActiveItem}: {
         console.log("handleItemChange", value);
         const new_form = clone_object<FormType>(form);
         
-        new_form.items = items.map((item: ItemType) => {
+        new_form.items = form.items.map((item: ItemType) => {
             if (item.id == value.id) {
                 return value;
             }
             return item;
         });
         setForm(new_form);
-        setItems(new_form.items);
         
     };
     
@@ -154,7 +146,7 @@ export default function Canvas({activeItem, setActiveItem}: {
             
             <div ref={setNodeRef} className="canvas form-area" style={style} {...listeners}>
             <h1>{form.label}</h1>
-                {items?.map((item) => (
+                {form.items.map((item) => (
                     <SortableItem
                         key={item.id}
                         id={item.id}

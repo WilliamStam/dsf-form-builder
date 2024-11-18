@@ -1,43 +1,30 @@
+import {OptionType} from "@/lib/items/input/checkbox/config.ts";
 import {ConfigExternalDataType, FieldComponentProps} from "@/lib/objects";
+import {getOptionsFromExternalData} from "@/lib/objects/config.ts";
 import {useConfigStore} from "@/lib/stores";
 import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
 import React, {useEffect, useState} from "react";
 import {itemConfig, ItemConfigType, SelectOptionType} from "./config.ts";
 
+let loadcount = 0
 const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
+    console.log("           ***************", item.type, item.id, loadcount++, "***************");
     const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
-    const [options, setOptions] = useState<SelectOptionType[]>(data.options);
+    const [options, setOptions] = useState<OptionType[] | null>(null);
+    
     
     useEffect(() => {
-        setData({...itemConfig, ...item});
-    }, [item]);
-    
-    useEffect(() => {
-        setOptions(data.options);
-        if (data.source != "local") {
-            console.log("CONFIG", config, data.source);
-            const external: ConfigExternalDataType | undefined = config.external_data.find((item) => item.key == data.source);
-            if (external) {
-                if (external.options) {
-                    setOptions(external.options);
-                }
-                if (external.options_func) {
-                    external.options_func().then((y: SelectOptionType[]) => {
-                        console.log("yyyyyyyyyyyy", y);
-                        setOptions(y);
-                    });
-                    
-                    // options = await external.options_func() ?? []
-                }
-            }
+        if (item.source != data.source || options == null) {
+            getOptionsFromExternalData(item, config).then(y => setOptions(y));
         }
-        
-    }, [data.source, data.options]);
+        setData({...data, ...item});
+    }, [item]);
     
     const handleOnChange = (event: DropdownChangeEvent) => {
         const updatedData: ItemConfigType = {...{...itemConfig, ...item}, value: event.target.value};
         onChange(updatedData);
+        setData(updatedData);
     };
     
     
