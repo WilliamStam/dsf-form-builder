@@ -13,7 +13,13 @@ jobs:
             -   uses: actions/checkout@v4
             -   name: Use Node.js ${{ matrix.node-version }}
                 uses: actions/setup-node@v4
-            -   name: Update version in package.json
-                uses: maks-stupak/gh-action-bump-version@v7.1.2
+            -   name: Increment value
+                uses: yoichiro/gh-action-increment-value@main
+                with:
+                    target_directory: '.'
+                    target_file: 'version.json'
+                    prefix: 'buildNumber":'
+                    suffix: '}'
+                    commit_message: 'Increment the build number to '
             -   run: npm ci
             -   run: npm run build --if-present
