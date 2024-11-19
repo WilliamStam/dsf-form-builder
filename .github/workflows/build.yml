@@ -13,13 +13,21 @@ jobs:
             -   uses: actions/checkout@v4
             -   name: Use Node.js ${{ matrix.node-version }}
                 uses: actions/setup-node@v4
-            -   name: Increment value
-                uses: yoichiro/gh-action-increment-value@main
-                with:
-                    target_directory: '.'
-                    target_file: 'version.json'
-                    prefix: 'buildNumber":'
-                    suffix: '}'
-                    commit_message: 'Increment the build number to '
+            -   name: Read package.json
+                uses: krstphrrr/package-json-version-reader@v1
+                id: package-version
+            -   name: Show version number
+                run: echo "Version is ${{ steps.package-version.outputs.version }}"
             -   run: npm ci
             -   run: npm run build --if-present
+            -   name: Bump version and push tag
+                id: tag_version
+                uses: mathieudutour/github-tag-action@v6.2
+                with:
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Create a GitHub release
+                uses: ncipollo/release-action@v1
+                with:
+                    tag: ${{ steps.tag_version.outputs.new_tag }}
+                    name: Release ${{ steps.tag_version.outputs.new_tag }}
+                    body: ${{ steps.tag_version.outputs.changelog }}
