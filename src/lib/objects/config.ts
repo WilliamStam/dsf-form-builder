@@ -28,7 +28,7 @@ export type ItemTypeWithExternalData = {
 
 
 export const getOptionsFromExternalData = (data: ItemTypeWithExternalData, config: ConfigType ): Promise<ConfigExternalDataResponseType[]> => {
-    if (data.source == "local") {
+    if (data.source == "local" || !data.source) {
         return new Promise((resolve, reject) => {
             if (data.options) {
                 resolve(data.options);
@@ -49,7 +49,7 @@ export const getOptionsFromExternalData = (data: ItemTypeWithExternalData, confi
                 
             }
         } else {
-            reject({error: "Config external_data doesnt contain the source"});
+            reject({error: `Config external_data doesnt contain the source [${data.source}]`});
         }
     })
 }

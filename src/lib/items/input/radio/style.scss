@@ -1,4 +1,4 @@
-.input-checkbox-area {
+.input-radio-area {
     .align-items-center {
         margin:0;
         padding:0;
@@ -9,7 +9,7 @@
             cursor: pointer;
         }
     }
-    .input-checkbox-item {
+    .input-radio-item {
         display:flex;
         align-items: center;
         label {
@@ -23,7 +23,7 @@
         display: flex;
         align-items: stretch;
         margin: 0;
-        .input-checkbox-item {
+        .input-radio-item {
             display: initial;
             align-items: center;
             text-align: center;
@@ -31,12 +31,12 @@
             margin-bottom:5px;
             padding:0;
             
-            input[type=checkbox] {
+            input[type=radio] {
                 position: absolute;
                 visibility: hidden;
                 opacity: 0;
             }
-            input[type=checkbox] + label {
+            input[type=radio] + label {
                 color: #CCCCCC;
                 border-radius: 6px;
                 padding: 1rem;
@@ -44,7 +44,7 @@
                 margin:0;
                 
             }
-            input[type=checkbox]:checked + label {
+            input[type=radio]:checked + label {
                 background: var(--primary-color);
                 color: var(--primary-color-text);
                 

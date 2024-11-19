@@ -1,11 +1,13 @@
 import {FieldComponentProps} from "@/lib/objects";
-import {getOptionsFromExternalData} from "@/lib/objects/config.ts";
+import {getOptionsFromExternalData, } from "@/lib/objects/config.ts";
 import {useConfigStore} from "@/lib/stores";
 import {clone_object} from "@/lib/utilities.ts";
 import {Checkbox, CheckboxChangeEvent} from "primereact/checkbox";
+import {Skeleton} from "primereact/skeleton";
 import React, {useEffect, useState} from "react";
-import {itemConfig, ItemConfigType, OptionType} from "./config.ts";
+import {itemConfig, ItemConfigType, OptionType, displayOptions} from "./config.ts";
 import "./style.scss";
+
 
 let loadcount = 0;
 const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onChange}) => {
@@ -13,11 +15,15 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     const {config,} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     const [options, setOptions] = useState<OptionType[] | null>(null);
-    
+    const [loading, setLoading] = useState<boolean>(true);
     
     useEffect(() => {
         if (item.source != data.source || options == null) {
-            getOptionsFromExternalData(item, config).then(y => setOptions(y));
+            setLoading(true);
+            getOptionsFromExternalData(item, config).then(y => {
+                setOptions(y);
+                setLoading(false);
+            });
         }
         setData({...data, ...item});
     }, [item]);
@@ -38,29 +44,27 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     };
     
     
-    const id = Math.random().toString(36).substring(2, 15);
+    const id = `${data.type}-${data.id}`;
+    
     return (
         <>
-            <article className={`${data.type}-area ${data.display}`}>
-                <div className="flex flex-column gap-2">
-                <label htmlFor={id}>{data.label}</label>
-                    {options && options.map((option) => {
-                        return (
-                            <div key={`${data.id}-${option.value}`} id={id} className="flex align-items-center">
-                            
-                            <Checkbox
-                                inputId={option.value}
-                                name="value"
-                                value={option.value}
-                                onChange={handleOnChange}
-                                checked={data.value.includes(option.value)}
-                            />
-                            <label htmlFor={option.value} className="ml-2">{option.label}</label>
-                        </div>
-                        );
-                    })}
-                
-            </div>
+            <article className={`${data.type}-area flex flex-column gap-2`} id={`${id}`}>
+                <label>{data.label}</label>
+                <div className={data.display}>
+                    {loading && <div>
+                        <Skeleton width="10rem" className="mb-2"></Skeleton>
+                        <Skeleton width="5rem" className="mb-2"></Skeleton>
+                        <Skeleton width="10rem"></Skeleton>
+                    </div>} {!loading && options && options.map((option) => {
+                        const option_component = displayOptions[data.display] ?? displayOptions['normal'];
+                        return React.createElement(option_component.component, {
+                            data: data,
+                            option: option,
+                            onChange: handleOnChange,
+                            key: `${id}-${option.value}`
+                        });
+                })}
+                </div>
             </article>
             
         </>

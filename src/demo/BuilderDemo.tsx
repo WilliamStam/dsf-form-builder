@@ -4,6 +4,7 @@ import "./index.css";
 import {Form} from "@/lib/form";
 import {ConfigType, FormType} from "@/lib/objects";
 import {clone_object} from "@/lib/utilities.ts";
+import {nanoid} from "nanoid";
 import {FC, useEffect, useState} from "react";
 import FormValueEditor from "./input"
 import {diff} from "deep-object-diff";
@@ -56,7 +57,7 @@ const BuilderDemo: FC = () => {
                 display: [""],
                 options_func: async () => {
                     console.log("XXXXXXXXX Fetching employees", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    await sleep(1000);
+                    await sleep(3000);
                 
                     return employee_data.employees.map((item) => {
                             return {
@@ -99,7 +100,113 @@ const BuilderDemo: FC = () => {
                 }
             }
         ],
-        // forms: [
+        forms: [
+            {
+                "id": 100,
+                "label": "Checkboxes",
+                "items": [
+                    {id: nanoid(), type: "embedded-form", form_id: 101, items: []},
+                    {id: nanoid(), type: "embedded-form", form_id: 102, items: []},
+                ]
+            },
+            {
+                "id": 101,
+                "label": "Checkboxes Options",
+                "items": [
+                    {
+                        id: nanoid(),
+                        type: "input-checkbox",
+                        label: "Normal",
+                        value: [],
+                        options: [{value:1,label:"One"}, {value: 2, label: "Two"}, {value: 3, label: "Three"}],
+                        display: "normal"
+                    },
+                    {
+                        id: nanoid(),
+                        type: "input-checkbox",
+                        label: "Button block",
+                        value: [],
+                        options: [{value: 1, label: "One"}, {value: 2, label: "Two"}, {value: 3, label: "Three"}],
+                        display: "button-block"
+                    },
+                ]
+            },
+            {
+                "id": 102,
+                "label": "Checkboxes Ajax",
+                "items": [
+                    {
+                        id: nanoid(),
+                        type: "input-checkbox",
+                        label: "Button block",
+                        value: [],
+                        source: "employees",
+                        display: "button-block"
+                    },
+                    {
+                        id: nanoid(),
+                        type: "input-checkbox",
+                        label: "Normal",
+                        value: [],
+                        source: "employees",
+                        options: []
+                    },
+                ]
+            },
+            {
+                "id": 200,
+                "label": "Radios",
+                "items": [
+                    {id: nanoid(), type: "embedded-form", form_id: 201, items: []},
+                    {id: nanoid(), type: "embedded-form", form_id: 202, items: []},
+                ]
+            },
+            {
+                "id": 201,
+                "label": "Radio Options",
+                "items": [
+                    {
+                        id: nanoid(),
+                        type: "input-radio",
+                        label: "Normal",
+                        value: [],
+                        options: [{value: 1, label: "One"}, {value: 2, label: "Two"}, {value: 3, label: "Three"}],
+                        display: "normal"
+                    },
+                    {
+                        id: nanoid(),
+                        type: "input-radio",
+                        label: "Button block",
+                        value: [],
+                        options: [{value: 1, label: "One"}, {value: 2, label: "Two"}, {value: 3, label: "Three"}],
+                        display: "button-block"
+                    },
+                ]
+            },
+            {
+                "id": 202,
+                "label": "Radios Ajax",
+                "items": [
+                    {
+                        id: nanoid(),
+                        type: "input-radio",
+                        label: "Button block",
+                        value: [],
+                        source: "employees",
+                        display: "button-block"
+                    },
+                    {
+                        id: nanoid(),
+                        type: "input-radio",
+                        label: "Normal",
+                        value: [],
+                        source: "employees",
+                        options: []
+                    },
+                ]
+            },
+           
+        ]
         //     {
         //         id: 4, label: "Test Form", items: [
         //             {id: "1", type: "embedded-form", form_id: 7, items: []},
@@ -129,43 +236,11 @@ const BuilderDemo: FC = () => {
     
     let form_data_initial = {
         "id": 4,
-        "label": "Test Form",
+        "label": "Styles",
         "created_at": null,
         "items": [
-            // {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
-            {
-                "id": "00i2jadSN7cZCyAYdbqqn",
-                "type": "input-select",
-                "label": "",
-                "value": "x",
-                "source": "local",
-                "options": [{"value": "z", "label": "z"}, {"value": "x", "label": "x"}],
-                "placeholder": ""
-            },
-            {
-                "id": "7TF0pd2cD5ppc7ku9cL4C",
-                "type": "content-html",
-                "label": "",
-                "value": "<p><strong>ddddddd </strong>ss</p><figure class=\"table\" style=\"width:100%;\"><table style=\"background-color:hsl(90, 75%, 60%);border-color:hsl(0, 75%, 60%);border-style:solid;\"><tbody><tr><td>a</td><td>&nbsp;</td><td>d</td></tr><tr><td>&nbsp;</td><td>vg</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>b</td></tr></tbody></table></figure>",
-                "placeholder": ""
-            },
-            {
-                "id": "d8EZ7B0dcHyhsAydQkA",
-                "type": "input-select",
-                "label": "",
-                "value": [],
-                "source": "employees",
-                "options": []
-            },
-            {
-                "id": "r-d8EZ7B0dcHA",
-                "type": "input-checkbox",
-                "label": "",
-                "value": [],
-                "source": "employees",
-                "display": "button-block",
-                "options": []
-            },
+            {id: nanoid(), type: "embedded-form", form_id: 100, items: []},
+            {id: nanoid(), type: "embedded-form", form_id: 200, items: []}
             // {id: "1", type: "embedded-form", form_id: 8, items: []},
         ]
     }

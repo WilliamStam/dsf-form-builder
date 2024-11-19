@@ -24,7 +24,7 @@ import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import {RadioButton, RadioButtonChangeEvent} from "primereact/radiobutton";
 import React, {useEffect, useState} from "react";
-import {itemConfig, ItemConfigType, OptionType} from "./config.ts";
+import {itemConfig, ItemConfigType, OptionType, displayOptions} from "./config.ts";
 
 
 const SettingsEditOptionItem = ({option, onChange, index}: {
@@ -253,14 +253,12 @@ const SettingsComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item,
         
     }
     const display: DisplayType[] = [];
-    display.push({
-        key: "normal",
-        label: "Normal",
-    });
-    display.push({
-        key: "button-block",
-        label: "Button block",
-    });
+    
+    Object.keys(displayOptions).forEach((k:string)=> display.push({
+        key: k,
+        label: displayOptions[k].label,
+    }))
+    
     
     return (
         <>

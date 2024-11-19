@@ -7,6 +7,7 @@ import {clone_object} from "@/lib/utilities.ts";
 import {useDroppable} from "@dnd-kit/core";
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
+import {nanoid} from "nanoid";
 import {Button} from "primereact/button";
 import {ButtonGroup} from "primereact/buttongroup";
 
@@ -146,7 +147,7 @@ export default function Canvas({activeItem, setActiveItem}: {
             <h1>{form.label}</h1>
                 {form.items.map((item) => (
                     <SortableItem
-                        key={item.id}
+                        key={item.id ?? nanoid()}
                         id={item.id}
                         item={item}
                         active={activeItem}

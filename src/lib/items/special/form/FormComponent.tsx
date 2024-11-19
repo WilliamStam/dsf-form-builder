@@ -52,7 +52,9 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
                 <article className={`${item.type}-area`}>
                     <div className="flex flex-column gap-2">
                     <label>{data.label}</label>
-                        {JSON.stringify(childForm)}
+                        {/* <div>form: {JSON.stringify(childForm)} </div> */}
+                        {/* <div>config: {JSON.stringify(config)} </div> */}
+                       
                     <Form
                         onChange={formOnChange}
                         form={childForm}
