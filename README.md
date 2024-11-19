@@ -128,3 +128,5 @@ export default function App() {
     )
 }
 ```
+
+https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry

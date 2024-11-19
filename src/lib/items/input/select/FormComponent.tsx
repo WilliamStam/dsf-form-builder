@@ -12,11 +12,15 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
     const {config} = useConfigStore();
     const [data, setData] = useState<ItemConfigType>({...itemConfig, ...item});
     const [options, setOptions] = useState<OptionType[] | null>(null);
-    
+    const [loading,setLoading] = useState<boolean>(true)
     
     useEffect(() => {
         if (item.source != data.source || options == null) {
-            getOptionsFromExternalData(item, config).then(y => setOptions(y));
+            setLoading(true)
+            getOptionsFromExternalData(item, config).then(y => {
+                setOptions(y)
+                setLoading(false)
+            });
         }
         setData({...data, ...item});
     }, [item]);
@@ -42,6 +46,7 @@ const FormComponent: React.FC<FieldComponentProps<ItemConfigType>> = ({item, onC
                     showClear
                     placeholder={data.placeholder || ""}
                     className={"w-full"}
+                    loading={loading}
                 > </Dropdown>
             </div>
             </article>

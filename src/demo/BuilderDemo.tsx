@@ -8,6 +8,11 @@ import {FC, useEffect, useState} from "react";
 import FormValueEditor from "./input"
 import {diff} from "deep-object-diff";
 let loadcount = 0;
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const BuilderDemo: FC = () => {
     console.log("****************** BuilderDemo ", loadcount++, "******************");
     // we have the employee payload right here right now
@@ -51,6 +56,8 @@ const BuilderDemo: FC = () => {
                 display: [""],
                 options_func: async () => {
                     console.log("XXXXXXXXX Fetching employees", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    await sleep(1000);
+                
                     return employee_data.employees.map((item) => {
                             return {
                                 value: item.id,
@@ -127,6 +134,15 @@ const BuilderDemo: FC = () => {
         "items": [
             // {id: "3", type: "input-text", value: "", label: "WHats your favorite hammer song"},
             {
+                "id": "00i2jadSN7cZCyAYdbqqn",
+                "type": "input-select",
+                "label": "",
+                "value": "x",
+                "source": "local",
+                "options": [{"value": "z", "label": "z"}, {"value": "x", "label": "x"}],
+                "placeholder": ""
+            },
+            {
                 "id": "7TF0pd2cD5ppc7ku9cL4C",
                 "type": "content-html",
                 "label": "",
@@ -135,7 +151,7 @@ const BuilderDemo: FC = () => {
             },
             {
                 "id": "d8EZ7B0dcHyhsAydQkA",
-                "type": "input-checkbox",
+                "type": "input-select",
                 "label": "",
                 "value": [],
                 "source": "employees",
