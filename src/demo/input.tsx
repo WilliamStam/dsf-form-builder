@@ -12,7 +12,7 @@ const FormValueEditor: FC = ({...props}: {
     onChange: (form: FormType) => void,
 }) => {
     console.log("****************** FormValueEditor", loadcount++, "******************");
-    const [formJSON, setFormJSON] = useState(JSON.stringify(props.form));
+    const [formJSON, setFormJSON] = useState(JSON.stringify(props.form ?? {}));
     //
     const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const v = event.target.value;
@@ -20,8 +20,8 @@ const FormValueEditor: FC = ({...props}: {
     };
     
     useEffect(() => {
-        const new_value = JSON.stringify(props.form)
-        if (is_different(new_value,props.form)){
+        const new_value = JSON.stringify(props.form ?? {})
+        if (is_different(new_value,props.form ?? {})){
             setFormJSON(new_value)
         }
         
@@ -29,7 +29,7 @@ const FormValueEditor: FC = ({...props}: {
     
     useEffect(() => {
         const new_value = JSON.parse(formJSON)
-        if (is_different(new_value,props.form)){
+        if (is_different(new_value,props.form ?? {})){
             props.onChange(new_value)
         }
        

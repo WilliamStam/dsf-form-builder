@@ -12,12 +12,14 @@ interface FormState {
 
 export const FormStoreContext = createZustandContext<FormType, StoreApi<FormState>>(
     (initialValue: FormType) => {
+        if (!initialValue) initialValue = empty_form
         let form = fixFormItems({...empty_form, ...initialValue});
         return create<FormState>()((set, get) => ({
             form: form,
             setForm: (value: FormType) => {
-                console.log("useFormStore setForm", diff(get().form, value));
-                if (is_different(get().form, value)) {
+                value = {...empty_form, ...value ?? {}}
+                if (value && is_different(get().form, value)) {
+                    console.log("useFormStore setForm", diff(get().form, value));
                     set(() => ({form: fixFormItems(value)}));
                 }
             },

@@ -37,6 +37,7 @@ export const DragWrapper = ({children, activeItem, setActiveItem}: {
 }) => {
     console.log("  **************** DragWrapper", loadcount++, "****************");
     const {form, setForm} = useFormStore();
+    
     // const {config, setConfig} = useConfigStore();
     
     // ----------- DND --------------

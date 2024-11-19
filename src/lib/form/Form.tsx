@@ -18,8 +18,7 @@ const FormInner = ({...props}: {
 }) => {
     console.log("       ****************** FormInner", loadcount++, "******************");
     const {form, setForm} = useFormStore();
-    const {config, setConfig} = useConfigStore();
-    console.log(config)
+    const {setConfig} = useConfigStore();
     useEffect(() => {
         console.log(props.form);
         setForm(props.form);

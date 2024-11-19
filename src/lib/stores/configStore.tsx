@@ -16,12 +16,13 @@ interface ConfigState {
 
 export const ConfigStoreContext = createZustandContext<ConfigType, StoreApi<ConfigState>>(
     (initialValue: ConfigType) => {
-        let config = {...empty_config, ...initialValue};
+        let config = {...empty_config, ...initialValue ?? {}};
         return create<ConfigState>()((set, get) => ({
             config: config,
             setConfig: (value: ConfigType) => {
-                console.log("ConfigStoreContext setConfig", diff(get().config, value));
-                if (is_different(get().config, value)) {
+                value = {...empty_config, ...value ?? {}}
+                if (value && is_different(get().config, value)) {
+                    console.log("ConfigStoreContext setConfig", diff(get().config, value));
                     set(() => ({config: {...empty_config, ...value}}));
                 }
             },
