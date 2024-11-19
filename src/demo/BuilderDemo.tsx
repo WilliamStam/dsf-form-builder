@@ -49,7 +49,7 @@ const BuilderDemo: FC = () => {
         }
     });
     
-    const defined_config: ConfigType = {
+    let defined_config: ConfigType = {
         external_data: [
             {
                 key: "employees",
@@ -244,6 +244,7 @@ const BuilderDemo: FC = () => {
             // {id: "1", type: "embedded-form", form_id: 8, items: []},
         ]
     }
+    
     
     
     const [view, setView] = useState("form");

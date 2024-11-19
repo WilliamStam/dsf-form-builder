@@ -12,110 +12,96 @@ Css for the demo. the builder needs a "height" block. it tries to frill its pare
 body {
     margin: 0;
 }
-#builder {
-    height: calc(100vh - 10rem);
-}
-#output {
-    height: 10rem;
-    padding: 0.5rem;
-}
+
 ```
 
-component
+components
 
-```jsx
+FormBuilder, Form, Result
+
+pass in the same parameters for each of them 
+
+```tsx
 import React, {useState} from "react";
-import {FormBuilder} from "dsf-form-builder";
+import {FormBuilder, Form, Result, FormType, ConfigType} from "dsf-form-builder";
 import "dsf-form-builder/dist/style.css"
 import "./style.scss"
 export default function App() {
-    const config: ConfigType = {
+    const initial_config: ConfigType = {
         external_data: [
-              {
+            {
                 key: "something",
                 label: "somethings label",
                 options_func: async () => {
-                    console.log("XXXXXXXXX Fetching employees", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     return [
-                        {id: 1, label: "a",},
-                        {id: 2, label: "c",},
-                        {id: 3, label: "e",}
+                        {value: 1, label: "a",},
+                        {value: 2, label: "c",},
+                        {value: 3, label: "e",}
                     ];
                 },
             },
-           
+        
         ],
         forms: [
             {
-                id: 4, label: "Test Form", items: [
+                id: 4, label: "Test Form 4", items: [
                     {id: "1", type: "embedded-form", form_id: 7, items: []},
-                    {id: "2", type: "input-select", source: "employees"}
+                    {id: "2", label: "Select field", type: "input-select", source: "something"},
+                    {id: "3", label: "Checkboxes", type: "input-checkbox", source: "something"},
+                    {id: "4", label: "Radios", type: "input-radio", source: "something"},
                 ]
             },
-           
-        ]
-    };
-    
-    const [form, setForm] = useState({
-        "id": 4,
-        "label": "Demo form",
-        "config": [
             {
-                "id": "a",
-                "type": "select-select",
-                "options": [
+                id: 7, label: "Test Form 7", items: [
                     {
-                        "value": "1",
-                        "label": "1"
+                        id: "3",
+                        type: "input-radio",
+                        label: "Radio button block",
+                        value: [],
+                        options: [{value: 1, label: "One"}, {value: 2, label: "Two"}, {value: 3, label: "Three"}],
+                        display: "button-block"
                     },
-                    {
-                        "value": "2",
-                        "label": "2"
-                    }
-                ],
-                "name": "What date",
-                "value": "1"
-            },
-            
-            {
-                "id": "b",
-                "type": "input-text",
-                "label": "Text"
-            },
-            {
-                "id": "c",
-                "type": "input-date",
-                "label": "Date"
-            },
-            {
-                "id": "d",
-                "type": "input-number",
-                "label": "Number"
-            },
-            {
-                "id": "e",
-                "type": "content-html",
-                "label": "HTML",
-                "value": "This <strong>IS</strong> sparta!"
+                ]
             },
         
-        ],
-        "created_at": "2024-07-08T16:01:02"
-    });
-    const [formJSON, setFormJSON] = useState(JSON.stringify(form));
-    const handleOnChange = (event) => {
-        const v = event.target.value;
-        setFormJSON(v ?? "{}");
-        setForm(v ? JSON.parse(v) : {});
+        ]
     };
+    const initial_form: FormType = {
+        id: 5,
+        label: "Demo form",
+        items: [
+            {id: "1", type: "embedded-form", form_id: 4, items: []},
+            {id: "2", label: "Choose something", type: "input-select", source: "something"},
+            {id: "3", label: "Enter some text", type: "input-text", value: ""},
+        ],
+    };
+    
+    
+    const [form, setForm] = useState(initial_form);
+    const [config, setConfig] = useState(initial_config);
+    
     const onChange = (form) => {
-        setFormJSON(JSON.stringify(form));
+        console.log("Form changed")
     };
         
     return (
         <>
             <div id="builder">
                 <FormBuilder
+                    form={form}
+                    onChange={onChange}
+                    config={config}
+                />
+            </div>
+            <div id="form">
+                <Form
+                    form={form}
+                    onChange={onChange}
+                    config={config}
+                />
+            </div>
+            <div id="result">
+                <Result
                     form={form}
                     onChange={onChange}
                     config={config}
@@ -128,5 +114,7 @@ export default function App() {
     )
 }
 ```
+
+
 
 https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry
